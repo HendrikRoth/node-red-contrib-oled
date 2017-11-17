@@ -1,0 +1,30 @@
+{
+  "name": "node-red-contrib-oled",
+  "version": "0.0.1",
+  "description": "Node-Red node for controlling OLED displays",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HendrikRoth/node-red-contrib-oled.git"
+  },
+  "keywords": [
+    "Node-Red"
+  ],
+  "author": "Hendrik Roth <hi@hendrikroth.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HendrikRoth/node-red-contrib-oled/issues"
+  },
+  "homepage": "https://github.com/HendrikRoth/node-red-contrib-oled#readme",
+  "dependencies": {
+    "i2c-bus": "^1.2.4",
+    "oled-font-5x7": "^1.0.0",
+    "oled-i2c-bus": "^1.0.10"
+  },
+  "node-red": {
+    "nodes": {
+      "oled": "oled.js"
+    }
+  }
+}

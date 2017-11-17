@@ -1,0 +1,81 @@
+<script type='text/javascript'>
+	RED.nodes.registerType('oled-config', {
+		category: 'config',
+		defaults: {
+			name: {
+				value: '',
+				require: false
+			},
+			width: {
+				value: 128,
+				type: 'number',
+				require: true
+			},
+			height: {
+				value: 64,
+				type: 'number',
+				require: true
+			},
+			address: {
+				value: 0x3D,
+				type: 'number',
+				require: true
+			}
+		},
+		label: function() {
+			return this.name ? this.name : 'OLED' + this.address
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='oled-config'>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-config-input-name'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-address'><i class='fa'></i> Bus Address</label>
+		<input type='text' id='node-config-input-address' />
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-width'><i class='fa'></i> Width</label>
+		<input type='text' id='node-config-input-width' />
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-height'><i class='fa'></i> Height</label>
+		<input type='text' id='node-config-input-height' />
+	</div>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('oled-clear', {
+		category: 'oled',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				value: '',
+				type: 'oled-config'
+				require: true
+			}
+		},
+		inputs: 1,
+		outputs: 0
+		label: function() {
+			return this.name ? this.name : 'OLED Clear'
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='oled-clear'>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-config-input-name'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-config-input-display' />
+	</div>
+</script>
