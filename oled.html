@@ -48,6 +48,37 @@
 </script>
 
 <script type='text/javascript'>
+	RED.nodes.registerType('oled-write-string', {
+		category: 'oled',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function() {
+			return this.name ? this.name : 'OLED String'
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='oled-write-string'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type='text/javascript'>
 	RED.nodes.registerType('oled-clear', {
 		category: 'oled',
 		defaults: {
@@ -56,13 +87,11 @@
 				required: false
 			},
 			display: {
-				value: '',
 				type: 'oled-config'
-				require: true
 			}
 		},
 		inputs: 1,
-		outputs: 0
+		outputs: 0,
 		label: function() {
 			return this.name ? this.name : 'OLED Clear'
 		}
@@ -71,11 +100,259 @@
 
 <script type='text/x-red' data-template-name='oled-clear'>
 	<div class='form-row'>
-		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
-		<input type='text' id='node-config-input-name'/>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
 	</div>
 	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('oled-dim', {
+		category: 'oled',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function() {
+			return this.name ? this.name : 'OLED Clear'
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='oled-dim'>
+	<div class='form-row'>
 		<label for='node-config-input-display'><i class='fa'></i> Display</label>
-		<input type='text' id='node-config-input-display' />
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('oled-invert', {
+		category: 'oled',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function() {
+			return this.name ? this.name : 'OLED Dim'
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='oled-invert'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('oled-turn-on', {
+		category: 'oled',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function() {
+			return this.name ? this.name : 'OLED Turn on'
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='oled-turn-on'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('oled-turn-off', {
+		category: 'oled',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function() {
+			return this.name ? this.name : 'OLED Turn on'
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='oled-turn-off'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('oled-draw-pixel', {
+		category: 'oled',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function() {
+			return this.name ? this.name : 'OLED Turn on'
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='oled-draw-pixel'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('oled-draw-line', {
+		category: 'oled',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function() {
+			return this.name ? this.name : 'OLED Turn on'
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='oled-draw-line'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('oled-fill-rect', {
+		category: 'oled',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function() {
+			return this.name ? this.name : 'OLED Turn on'
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='oled-fill-rect'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('oled-in', {
+		category: 'oled',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function() {
+			return this.name ? this.name : 'OLED Turn on'
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='oled-in'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
 	</div>
 </script>

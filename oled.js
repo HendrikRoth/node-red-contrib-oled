@@ -10,6 +10,7 @@ module.exports = function(RED) {
 		if (node.clear) {
 			display.clearDisplay()
 			display.setCursor(1, 1)
+			display.update()
 		}
 	}
 
@@ -45,12 +46,13 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, config)
 
 		self.config = {
-			width: config.width,
-			height: config.height,
-			address: config.address
+			width: parseInt(config.width),
+			height: parseInt(config.height),
+			address: parseInt('0x'+config.address)
 		}
 
 		displays[self.id] = new Oled(i2cBus, self.config)
+		check(displays[self.id], { clear: true })
 	}
 
 	RED.nodes.registerType('oled-config', OledConfig)
@@ -60,10 +62,11 @@ module.exports = function(RED) {
 			var self = this
 			RED.nodes.createNode(self, n)
 
-			self.display = RED.nodes.getNode(n.display)
+			self.display = displays[n.display]
 
 			self.on('input', function(msg) {
 				self.display[fn](msg.payload)
+				self.display.update()
 			})
 		}
 	}
@@ -78,7 +81,7 @@ module.exports = function(RED) {
 		var self = this
 		RED.nodes.createNode(self, n)
 
-		self.display = RED.nodes.getNode(n.display)
+		self.display = displays[n.display]
 
 		self.on('input', function(msg) {
 			check(self.display, n)
@@ -97,7 +100,7 @@ module.exports = function(RED) {
 		var self = this
 		RED.nodes.createNode(self, n)
 
-		self.display = RED.nodes.getNode(n.display)
+		self.display = displays[n.display]
 
 		self.on('input', function(msg) {
 			check(self.display, n)
@@ -116,7 +119,7 @@ module.exports = function(RED) {
 		var self = this
 		RED.nodes.createNode(self, n)
 
-		self.display = RED.nodes.getNode(n.display)
+		self.display = displays[n.display]
 
 		self.on('input', function(msg) {
 			check(self.display, n)
@@ -137,7 +140,7 @@ module.exports = function(RED) {
 		var self = this
 		RED.nodes.createNode(self, n)
 
-		self.display = RED.nodes.getNode(n.display)
+		self.display = displays[n.display]
 
 		self.on('input', function(msg) {
 			check(self.display, n)
@@ -155,7 +158,7 @@ module.exports = function(RED) {
 		var self = this
 		RED.nodes.createNode(self, n)
 
-		self.display = RED.nodes.getNode(n.display)
+		self.display = displays[n.display]
 
 		self.on('input', function(msg) {
 			check(self.display, n)
@@ -172,10 +175,11 @@ module.exports = function(RED) {
 						typeof p.wrapping === 'undefined' ? n.wrapping : p.wrapping
 					)
 				} else {
+					self.display.setCursor(1, 1)
 					self.display.writeString(font, 1, msg.payload, 1, true)
 				}
 			} catch (err) {
-				node.error(err)
+				self.error(err)
 			}
 		})
 	}
@@ -186,7 +190,7 @@ module.exports = function(RED) {
 		var self = this
 		RED.nodes.createNode(self, n)
 
-		self.display = RED.nodes.getNode(n.display)
+		self.display = displays[n.display]
 
 		var run = function(payload) {
 			return function(oled) {
