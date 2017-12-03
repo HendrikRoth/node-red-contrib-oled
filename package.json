@@ -9,7 +9,7 @@
     "url": "git+https://github.com/HendrikRoth/node-red-contrib-oled.git"
   },
   "keywords": [
-    "Node-Red"
+    "node-red"
   ],
   "author": "Hendrik Roth <hi@hendrikroth.com>",
   "license": "MIT",
