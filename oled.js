@@ -5,7 +5,21 @@ var font = require('oled-font-5x7')
 
 module.exports = function(RED) {
 	var displays = {}
+	
+	'---------------------------------- Function ----------------------------------'
+	function OledFunction(fn) {
+		return function(n) {
+			var self = this
+			RED.nodes.createNode(self, n)
+			self.display = displays[n.display]
+			self.on('input', function(msg) {
+				self.display[fn](msg.payload)
+				self.display.update()
+			})
+		}
+	}
 
+	'---------------------------------- Check ----------------------------------'
 	function check(display, node) {
 		if (node.clear) {
 			display.clearDisplay()
@@ -14,147 +28,69 @@ module.exports = function(RED) {
 		}
 	}
 
-	function drawPixel(payload, display, node) {
-		if (typeof payload !== 'Array') node.error('Payload not of type Array [ [x, y, color] ]')
-		display.drawPixel(payload)
-	}
-
-	function drawLine(payload, display, node) {
-		if (typeof payload !== 'Array') node.error('Payload not of type Array [x0, y0, x1, y1, color]')
-		if (payload.length < 4 || payload.length > 4) node.error('Payload format not correct [x0, y0, x1, y1, color]')
-		display.drawLine(payload)
-	}
-
-	function scroll(payload, display, node) {
-		if (typeof payload !== 'undefined') {
-			if (typeof payload === 'boolean' && !payload) {
-				display.stopscroll()
-			} else if (typeof payload === 'object') {
-				var p = payload
-				display.startscroll(p.direction || 'left', p.start || 0, p.stop || 128)
-			} else {
-				var p = JSON.parse(payload)
-				if (typeof p !== 'Array') node.error('Payload not of type Array [direction, start, stop] or Boolean')
-				if (p.length < 3 || p.length > 3) node.error('Payload format not correct [direction, start, stop]')
-				display.startscroll(p[0], p[1], p[2])
-			}
-		}
-	}
-
+	'---------------------------------- Config ----------------------------------'
 	function OledConfig(config) {
 		var self = this
 		RED.nodes.createNode(self, config)
-
 		self.config = {
 			width: parseInt(config.width),
 			height: parseInt(config.height),
 			address: parseInt('0x'+config.address)
 		}
-
 		displays[self.id] = new Oled(i2cBus, self.config)
 		check(displays[self.id], { clear: true })
 	}
 
-	RED.nodes.registerType('oled-config', OledConfig)
-
-	function OledFunction(fn) {
-		return function(n) {
-			var self = this
-			RED.nodes.createNode(self, n)
-
-			self.display = displays[n.display]
-
-			self.on('input', function(msg) {
-				self.display[fn](msg.payload)
-				self.display.update()
-			})
-		}
-	}
-
-	RED.nodes.registerType('oled-clear', OledFunction('clearDisplay'))
-	RED.nodes.registerType('oled-dim', OledFunction('dimDisplay'))
-	RED.nodes.registerType('oled-invert', OledFunction('invertDisplay'))
-	RED.nodes.registerType('oled-turn-off', OledFunction('turnOffDisplay'))
-	RED.nodes.registerType('oled-turn-on', OledFunction('turnOnDisplay'))
-
-	function OledDrawPixel(n) {
+	'---------------------------------- Pixel ----------------------------------'
+	function Pixel(n) {
 		var self = this
 		RED.nodes.createNode(self, n)
-
 		self.display = displays[n.display]
-
 		self.on('input', function(msg) {
 			check(self.display, n)
 			try {
-				var p = JSON.parse(msg.payload)
-				drawPixel(p, self.display, node)
+				var p = msg.payload
+				self.display.drawPixel(msg.payload)
 			} catch (err) {
-				node.error(err)
+				self.error(err)
 			}
 		})
 	}
 
-	RED.nodes.registerType('oled-draw-pixel', OledDrawPixel)
-
-	function OledDrawLine(n) {
+	'---------------------------------- Line ----------------------------------'
+	function Line(n) {
 		var self = this
 		RED.nodes.createNode(self, n)
-
 		self.display = displays[n.display]
-
 		self.on('input', function(msg) {
 			check(self.display, n)
 			try {
-				var p = JSON.parse(msg.payload)
-				drawLine(p, self.display, node)
+				var p = msg.payload
+				self.display.drawLine(p.x0,p.y0,p.x1,p.y1,p.color,true)
 			} catch (err) {
-				node.error(err)
+				self.error(err)
 			}
 		})
 	}
 
-	RED.nodes.registerType('oled-draw-line', OledDrawLine)
-
-	function OledFillRect(n) {
+	'---------------------------------- Rectangle ----------------------------------'
+	function FillRectangle(n) {
 		var self = this
 		RED.nodes.createNode(self, n)
-
 		self.display = displays[n.display]
-
 		self.on('input', function(msg) {
 			check(self.display, n)
 			try {
-				var p = JSON.parse(msg.payload)
-				if (typeof p !== 'Array') node.error('Payload not of type Array [x0, y0, x1, y1, color]')
-				if (p.length < 4 || p.length > 4) node.error('Payload format not correct [x0, y0, x1, y1, color]')
-				self.display.fillRect(p)
+				var p = msg.payload
+				self.display.fillRect(p.x,p.y,p.w,p.h,p.color,true)
 			} catch (err) {
-				node.error(err)
+				self.error(err)
 			}
 		})
 	}
 
-	RED.nodes.registerType('oled-fill-rect', OledFillRect)
-
-	function OledScroll(n) {
-		var self = this
-		RED.nodes.createNode(self, n)
-
-		self.display = displays[n.display]
-
-		self.on('input', function(msg) {
-			check(self.display, n)
-			try {
-				scroll(msg.payload, self.display, node)
-			} catch (err) {
-				node.error(err)
-			}
-		})
-	}
-
-	RED.nodes.registerType('oled-scroll', OledScroll)
-
-	function OledWriteString(n) {
+	'---------------------------------- String ----------------------------------'
+	function String(n) {
 		var self = this
 		RED.nodes.createNode(self, n)
 
@@ -184,44 +120,123 @@ module.exports = function(RED) {
 		})
 	}
 
-	RED.nodes.registerType('oled-write-string', OledWriteString)
-
-	function OledIn(n) {
+	'---------------------------------- Scroll ----------------------------------'
+	function Scroll(n) {
 		var self = this
 		RED.nodes.createNode(self, n)
-
 		self.display = displays[n.display]
-
-		var run = function(payload) {
-			return function(oled) {
-				eval(payload)
-			}(self.display)
-		}
-
 		self.on('input', function(msg) {
 			check(self.display, n)
-			if (typeof msg.payload === 'object') {
+			try {
 				var p = msg.payload
-
-				// control
-				if (typeof p.invert !== 'undefined') self.display.invertDisplay(p.invert)
-				if (typeof p.on !== 'undefined') p.on ? self.display.turnOnDisplay() : self.display.turnOffDisplay()
-				if (typeof p.dim !== 'undefined') self.display.dimDisplay(p.dim)
-
-				// plain
-				if (typeof p.plain !== 'undefined') run(p.plain)
-
-				// draw
-				if (typeof p.drawPixel !== 'undefined') drawPixel(p.drawPixel, self.display, node)
-				if (typeof p.drawLine !== 'undefined') drawLine(p.drawLine, self.display, node)
-
-				// scroll
-				if (typeof p.scroll !== 'undefined') scroll(p.scroll, self.display, node)
-			} else if (typeof msg.payload === 'string') {
-				self.display.writeString(font, 1, msg.payload, 1, true)
-			} else {
-				self.display.turnOffDisplay(msg.payload)
+				if (typeof p !== 'undefined') {
+					if (typeof p === 'boolean' && !p) {
+						self.display.stopScroll()
+					}
+					else if (typeof p === 'object') {
+					self.display.startScroll(p.direction || 'left', p.start || 0, p.stop || 128)
+					} 
+				}	
+			} catch (err) {
+				self.error(err)
 			}
 		})
 	}
+
+	'---------------------------------- Battery ----------------------------------'
+	function Battery(n) {
+		var self = this
+		RED.nodes.createNode(self, n)
+		self.display = displays[n.display]
+		self.on('input', function(msg) {
+			check(self.display, n)
+			try {
+				var p = msg.payload
+				self.display.drawLine(p.x,p.y,p.x+16,p.y,1)
+				self.display.drawLine(p.x,p.y+8,p.x+16,p.y+8,1)
+				self.display.drawLine(p.x,p.y,p.x,p.y+8,1)
+				self.display.drawPixel([[p.x+17,p.y+1,1],[p.x+17,p.y+7,1]])
+				self.display.drawLine(p.x+18,p.y+1,p.x+18,p.y+7,1)
+				
+				if (p.p >= 70) {
+					self.display.fillRect(p.x+2,p.y+2,3,5,1,true)
+					self.display.fillRect(p.x+7,p.y+2,3,5,1,true)
+					self.display.fillRect(p.x+12,p.y+2,3,5,1,true)}
+
+				if (p.p >= 40 && p.p < 70) {
+					self.display.fillRect(p.x+2,p.y+2,3,5,1,true)
+					self.display.fillRect(p.x+7,p.y+2,3,5,1,true)
+					self.display.fillRect(p.x+12,p.y+2,3,5,0,true)}
+
+				if (p.p >= 10 && p.p < 40) {
+					self.display.fillRect(p.x+2,p.y+2,3,5,1,true)
+					self.display.fillRect(p.x+7,p.y+2,3,5,0,true)
+					self.display.fillRect(p.x+12,p.y+2,3,5,0,true)}
+
+				if (p.p < 10) {
+					self.display.fillRect(p.x+2,p.y+2,3,5,0,true)
+					self.display.fillRect(p.x+7,p.y+2,3,5,0,true)
+					self.display.fillRect(p.x+12,p.y+2,3,5,0,true)}
+
+			} catch (err) {
+				self.error(err)
+			}
+		})
+	}
+
+	'---------------------------------- Wifi ----------------------------------'
+	function Wifi(n) {
+		var self = this
+		RED.nodes.createNode(self, n)
+		self.display = displays[n.display]
+		self.on('input', function(msg) {
+			check(self.display, n)
+			try {
+				var p = msg.payload
+				self.display.drawLine(p.x,p.y,p.x+8,p.y,1)
+				self.display.drawLine(p.x,p.y,p.x+4,p.y+4,1)
+				self.display.drawLine(p.x+8,p.y,p.x+4,p.y+4,1)
+				self.display.drawLine(p.x+4,p.y,p.x+4,p.y+9,1)
+				
+				if (p.p >= 70) {
+					self.display.fillRect(p.x+6,p.y+8,2,2,1,true)
+					self.display.fillRect(p.x+10,p.y+6,2,4,1,true)
+					self.display.fillRect(p.x+14,p.y+4,2,6,1,true)}
+
+				if (p.p >= 40 && p.p < 70) {
+					self.display.fillRect(p.x+6,p.y+8,2,2,1,true)
+					self.display.fillRect(p.x+10,p.y+6,2,4,1,true)
+					self.display.fillRect(p.x+14,p.y+4,2,6,0,true)}
+
+				if (p.p >= 10 && p.p < 40) {
+					self.display.fillRect(p.x+6,p.y+8,2,2,1,true)
+					self.display.fillRect(p.x+10,p.y+6,2,4,0,true)
+					self.display.fillRect(p.x+14,p.y+4,2,6,0,true)}
+
+				if (p.p < 10) {
+					self.display.fillRect(p.x+6,p.y+8,2,2,0,true)
+					self.display.fillRect(p.x+10,p.y+6,2,4,0,true)
+					self.display.fillRect(p.x+14,p.y+4,2,6,0,true)}
+
+			} catch (err) {
+				self.error(err)
+			}
+		})
+	}
+
+
+	'---------------------------------- Registration ----------------------------------'
+	RED.nodes.registerType('Clear', OledFunction('clearDisplay'))
+	RED.nodes.registerType('Dimmed', OledFunction('dimDisplay'))
+	RED.nodes.registerType('Invertion', OledFunction('invertDisplay'))
+	RED.nodes.registerType('Turn-off', OledFunction('turnOffDisplay'))
+	RED.nodes.registerType('Turn-on', OledFunction('turnOnDisplay'))
+	RED.nodes.registerType('oled-config', OledConfig)
+	RED.nodes.registerType('Pixel', Pixel)
+	RED.nodes.registerType('Line', Line)
+	RED.nodes.registerType('FillRectangle', FillRectangle)
+	RED.nodes.registerType('String', String)
+	RED.nodes.registerType('Scroll', Scroll)
+	RED.nodes.registerType('Battery', Battery)
+	RED.nodes.registerType('Wifi', Wifi)
 }

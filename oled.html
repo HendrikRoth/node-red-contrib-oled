@@ -17,13 +17,13 @@
 				require: true
 			},
 			address: {
-				value: 0x3D,
+				value: 0x3c,
 				type: 'number',
 				require: true
 			}
 		},
 		label: function() {
-			return this.name ? this.name : 'OLED' + this.address
+			return this.name || 'OLED' + this.address;
 		}
 	})
 </script>
@@ -48,8 +48,10 @@
 </script>
 
 <script type='text/javascript'>
-	RED.nodes.registerType('oled-write-string', {
+	RED.nodes.registerType('String', {
 		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledString.png',
 		defaults: {
 			name: {
 				value: '',
@@ -62,12 +64,12 @@
 		inputs: 1,
 		outputs: 0,
 		label: function() {
-			return this.name ? this.name : 'OLED String'
+			return this.name || "String";
 		}
 	})
 </script>
 
-<script type='text/x-red' data-template-name='oled-write-string'>
+<script type='text/x-red' data-template-name='String'>
 	<div class='form-row'>
 		<label for='node-config-input-display'><i class='fa'></i> Display</label>
 		<input type='text' id='node-input-display'/>
@@ -76,11 +78,23 @@
 		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
 		<input type='text' id='node-input-name'/>
 	</div>
+</script>
+
+<script type="text/x-red" data-help-name="String">
+    <p>A node that write the inlet string with multiple of font 5x7</p>
+    <p>Payload should contain the font size (multiple of the original one in 5x7), coordinates where the string starts, and the text itself</p>
+	<p>size: <b>msg.payload.size</b></p>
+	<p>abscissa: <b>msg.payload.x</b></p>
+	<p>ordinate: <b>msg.payload.y</b></p>
+    <p>string: <b>msg.payload.text</b></p>
+	<p>Exemple: <b>{size:2,x:1,y:1,text:"Oled"}</b></p>
 </script>
 
 <script type='text/javascript'>
-	RED.nodes.registerType('oled-clear', {
+	RED.nodes.registerType('Clear', {
 		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledClear.png',
 		defaults: {
 			name: {
 				value: '',
@@ -93,12 +107,12 @@
 		inputs: 1,
 		outputs: 0,
 		label: function() {
-			return this.name ? this.name : 'OLED Clear'
+			return this.name || "Clear";
 		}
 	})
 </script>
 
-<script type='text/x-red' data-template-name='oled-clear'>
+<script type='text/x-red' data-template-name='Clear'>
 	<div class='form-row'>
 		<label for='node-config-input-display'><i class='fa'></i> Display</label>
 		<input type='text' id='node-input-display'/>
@@ -107,11 +121,19 @@
 		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
 		<input type='text' id='node-input-name'/>
 	</div>
+</script>
+
+<script type="text/x-red" data-help-name="Clear">
+    	<p>A node that clear the Oled display</p>
+    	<p>Payload should be set to <b>true</b> to enable the node</p>
+	<p>If pixels are inverted, set all pixels to 1</p>
 </script>
 
 <script type='text/javascript'>
-	RED.nodes.registerType('oled-dim', {
+	RED.nodes.registerType('Dimmed', {
 		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledDim.png',
 		defaults: {
 			name: {
 				value: '',
@@ -124,12 +146,12 @@
 		inputs: 1,
 		outputs: 0,
 		label: function() {
-			return this.name ? this.name : 'OLED Clear'
+			return this.name || "Dimmed";
 		}
 	})
 </script>
 
-<script type='text/x-red' data-template-name='oled-dim'>
+<script type='text/x-red' data-template-name='Dimmed'>
 	<div class='form-row'>
 		<label for='node-config-input-display'><i class='fa'></i> Display</label>
 		<input type='text' id='node-input-display'/>
@@ -138,11 +160,18 @@
 		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
 		<input type='text' id='node-input-name'/>
 	</div>
+</script>
+
+<script type="text/x-red" data-help-name="Dimmed">
+    	<p>A node that change contrast of the Oled display</p>
+    	<p>Payload should be set to <b>true</b> to reduce contrast and to <b>false</b> to turn back to bright</p>
 </script>
 
 <script type='text/javascript'>
-	RED.nodes.registerType('oled-invert', {
+	RED.nodes.registerType('Invertion', {
 		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledInvert.png',
 		defaults: {
 			name: {
 				value: '',
@@ -155,12 +184,12 @@
 		inputs: 1,
 		outputs: 0,
 		label: function() {
-			return this.name ? this.name : 'OLED Dim'
+			return this.name || "Invertion";
 		}
 	})
 </script>
 
-<script type='text/x-red' data-template-name='oled-invert'>
+<script type='text/x-red' data-template-name='Invertion'>
 	<div class='form-row'>
 		<label for='node-config-input-display'><i class='fa'></i> Display</label>
 		<input type='text' id='node-input-display'/>
@@ -169,11 +198,18 @@
 		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
 		<input type='text' id='node-input-name'/>
 	</div>
+</script>
+
+<script type="text/x-red" data-help-name="Invertion">
+    	<p>A node that invert all pixels color values</p>
+    	<p>Payload should be set to <b>true</b> to invert and to <b>false</b> to reverse</p>
 </script>
 
 <script type='text/javascript'>
-	RED.nodes.registerType('oled-turn-on', {
+	RED.nodes.registerType('Turn-on', {
 		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledTurnOn.png',
 		defaults: {
 			name: {
 				value: '',
@@ -186,12 +222,12 @@
 		inputs: 1,
 		outputs: 0,
 		label: function() {
-			return this.name ? this.name : 'OLED Turn on'
+			return this.name || "Turn On";
 		}
 	})
 </script>
 
-<script type='text/x-red' data-template-name='oled-turn-on'>
+<script type='text/x-red' data-template-name='Turn-on'>
 	<div class='form-row'>
 		<label for='node-config-input-display'><i class='fa'></i> Display</label>
 		<input type='text' id='node-input-display'/>
@@ -200,11 +236,19 @@
 		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
 		<input type='text' id='node-input-name'/>
 	</div>
+</script>
+
+<script type="text/x-red" data-help-name="Turn-on">
+    	<p>A node that turn-on Oled display</p>
+    	<p>Payload should be set to <b>true</b> to enable the node</p>
+	<p>All previous display will be restore</p>
 </script>
 
 <script type='text/javascript'>
-	RED.nodes.registerType('oled-turn-off', {
+	RED.nodes.registerType('Turn-off', {
 		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledTurnOff.png',
 		defaults: {
 			name: {
 				value: '',
@@ -217,12 +261,12 @@
 		inputs: 1,
 		outputs: 0,
 		label: function() {
-			return this.name ? this.name : 'OLED Turn on'
+			return this.name || "Turn Off";
 		}
 	})
 </script>
 
-<script type='text/x-red' data-template-name='oled-turn-off'>
+<script type='text/x-red' data-template-name='Turn-off'>
 	<div class='form-row'>
 		<label for='node-config-input-display'><i class='fa'></i> Display</label>
 		<input type='text' id='node-input-display'/>
@@ -231,11 +275,19 @@
 		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
 		<input type='text' id='node-input-name'/>
 	</div>
+</script>
+
+<script type="text/x-red" data-help-name="Turn-off">
+    	<p>A node that turn-off Oled display</p>
+    	<p>Payload should be set to <b>true</b> to enable the node</p>
+	<p>All previous display will be store</p>
 </script>
 
 <script type='text/javascript'>
-	RED.nodes.registerType('oled-draw-pixel', {
+	RED.nodes.registerType('Pixel', {
 		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledPixel.png',
 		defaults: {
 			name: {
 				value: '',
@@ -248,12 +300,12 @@
 		inputs: 1,
 		outputs: 0,
 		label: function() {
-			return this.name ? this.name : 'OLED Turn on'
+			return this.name || "Pixel";
 		}
 	})
 </script>
 
-<script type='text/x-red' data-template-name='oled-draw-pixel'>
+<script type='text/x-red' data-template-name='Pixel'>
 	<div class='form-row'>
 		<label for='node-config-input-display'><i class='fa'></i> Display</label>
 		<input type='text' id='node-input-display'/>
@@ -262,11 +314,23 @@
 		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
 		<input type='text' id='node-input-name'/>
 	</div>
+</script>
+
+<script type="text/x-red" data-help-name="Pixel">
+	<p>A node that display specific pixel(s)</p>
+	<p>Payload should contain coordinates of the pixel(s) and the color</p>
+	<p>each pixel must be define like <b>[abscissa,ordinate,color]</b></p>
+	<p>if color is set to <b>0</b> the pixel will turn off</p>
+	<p>Exemple:</p>
+	<p>One pixel:<b>msg.payload=[1,1,1]</b></p>
+	<p>Several pixels: <b>msg.payload=[[1,1,1],[24,32,0],...]</b></p>
 </script>
 
 <script type='text/javascript'>
-	RED.nodes.registerType('oled-draw-line', {
+	RED.nodes.registerType('Line', {
 		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledLine.png',
 		defaults: {
 			name: {
 				value: '',
@@ -279,12 +343,12 @@
 		inputs: 1,
 		outputs: 0,
 		label: function() {
-			return this.name ? this.name : 'OLED Turn on'
+			return this.name || "Line";
 		}
 	})
 </script>
 
-<script type='text/x-red' data-template-name='oled-draw-line'>
+<script type='text/x-red' data-template-name='Line'>
 	<div class='form-row'>
 		<label for='node-config-input-display'><i class='fa'></i> Display</label>
 		<input type='text' id='node-input-display'/>
@@ -293,11 +357,25 @@
 		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
 		<input type='text' id='node-input-name'/>
 	</div>
+</script>
+
+<script type="text/x-red" data-help-name="Line">
+	<p>A node that draw a line</p>
+	<p>Payload should contain coordinates of the start pixel, the end pixel and the color</p>
+	<p>if color is set to <b>0</b> the line will turn off</p>
+	<p>start abscissa: <b>msg.payload.x0</b></p>
+	<p>start ordinate: <b>msg.payload.y0</b></p>
+ 	<p>end abscissa: <b>msg.payload.x1</b></p>
+ 	<p>end ordinate: <b>msg.payload.y1</b></p>
+  	<p>color: <b>msg.payload.color</b></p>
+	<p>Exemple: <b>{x0:1,y0:1,x1:30,y1:30,color:1}</b></p>
 </script>
 
 <script type='text/javascript'>
-	RED.nodes.registerType('oled-fill-rect', {
+	RED.nodes.registerType('FillRectangle', {
 		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledRectangle.png',
 		defaults: {
 			name: {
 				value: '',
@@ -310,12 +388,12 @@
 		inputs: 1,
 		outputs: 0,
 		label: function() {
-			return this.name ? this.name : 'OLED Turn on'
+			return this.name || "FillRectangle";
 		}
 	})
 </script>
 
-<script type='text/x-red' data-template-name='oled-fill-rect'>
+<script type='text/x-red' data-template-name='FillRectangle'>
 	<div class='form-row'>
 		<label for='node-config-input-display'><i class='fa'></i> Display</label>
 		<input type='text' id='node-input-display'/>
@@ -324,11 +402,25 @@
 		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
 		<input type='text' id='node-input-name'/>
 	</div>
+</script>
+
+<script type="text/x-red" data-help-name="FillRectangle">
+	<p>A node that draw a filled rectangle </p>
+	<p>Payload should contain coordinates of the start pixel, the width, the height and the color</p>
+	<p>if color is set to <b>0</b> the rectangle will turn off</p>
+	<p>abscissa: <b>msg.payload.x</b></p>
+	<p>ordinate: <b>msg.payload.y</b></p>
+ 	<p>width: <b>msg.payload.w</b></p>
+ 	<p>height: <b>msg.payload.h</b></p>
+  	<p>color: <b>msg.payload.color</b></p>
+	<p>Exemple: <b>{x:1,y:1,w:10,h:20,color:1}</b></p>
 </script>
 
 <script type='text/javascript'>
-	RED.nodes.registerType('oled-in', {
+	RED.nodes.registerType('Scroll', {
 		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledScroll.png',
 		defaults: {
 			name: {
 				value: '',
@@ -341,12 +433,12 @@
 		inputs: 1,
 		outputs: 0,
 		label: function() {
-			return this.name ? this.name : 'OLED Turn on'
+			return this.name || "Scroll";
 		}
 	})
 </script>
 
-<script type='text/x-red' data-template-name='oled-in'>
+<script type='text/x-red' data-template-name='Scroll'>
 	<div class='form-row'>
 		<label for='node-config-input-display'><i class='fa'></i> Display</label>
 		<input type='text' id='node-input-display'/>
@@ -356,3 +448,103 @@
 		<input type='text' id='node-input-name'/>
 	</div>
 </script>
+
+<script type="text/x-red" data-help-name="Scroll">
+	<p>A node that draw a wifi display (w:19, h:9)</p>
+	<p>Payload should contain coordinates of the start pixels and the wifi power reception</p>
+	<p>the treasholds are <10,10-40,40-70,70-100</p>
+	<p>abscissa: <b>msg.payload.x</b></p>
+	<p>ordinate: <b>msg.payload.y</b></p>
+ 	<p>percentage: <b>msg.payload.p</b></p>
+	<p>Exemple: <b>{x:1,y:1,p:25}</b></p>
+</script>
+
+<script type='text/javascript'>
+	RED.nodes.registerType('Battery', {
+		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledBattery.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function() {
+			return this.name || "Battery";
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='Battery'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="Battery">
+	<p>A node that draw a battery display (w:19, h:9)</p>
+	<p>Payload should contain coordinates of the start pixels and the battery charge percentage</p>
+	<p>the treasholds are <10,10-40,40-70,70-100</p>
+	<p>abscissa: <b>msg.payload.x</b></p>
+	<p>ordinate: <b>msg.payload.y</b></p>
+ 	<p>percentage: <b>msg.payload.p</b></p>
+	<p>Exemple: <b>{x:1,y:1,p:25}</b></p>
+</script>
+
+
+<script type='text/javascript'>
+	RED.nodes.registerType('Wifi', {
+		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledWifi.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function() {
+			return this.name || "Wifi";
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='Wifi'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="Wifi">
+	<p>A node that draw a wifi display (w:19, h:9)</p>
+	<p>Payload should contain coordinates of the start pixels and the wifi power reception</p>
+	<p>the treasholds are <10,10-40,40-70,70-100</p>
+	<p>abscissa: <b>msg.payload.x</b></p>
+	<p>ordinate: <b>msg.payload.y</b></p>
+ 	<p>percentage: <b>msg.payload.p</b></p>
+	<p>Exemple: <b>{x:1,y:1,p:25}</b></p>
+</script>
+
+
+
