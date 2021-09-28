@@ -35,9 +35,13 @@ module.exports = function(RED) {
 		self.config = {
 			width: parseInt(config.width),
 			height: parseInt(config.height),
-			address: parseInt('0x'+config.address)
+			address: parseInt('0x'+config.address),
 		}
 		displays[self.id] = new Oled(i2cBus, self.config)
+
+		if (config.flip)
+			displays[self.id].SEG_REMAP = 0xA0
+
 		check(displays[self.id], { clear: true })
 	}
 

@@ -20,6 +20,11 @@
 				value: 0x3c,
 				type: 'number',
 				require: true
+			},
+			flip: {
+				value: false,
+				type: 'boolean',
+				require: false
 			}
 		},
 		label: function() {
@@ -44,6 +49,10 @@
 	<div class='form-row'>
 		<label for='node-config-input-height'><i class='fa'></i> Height</label>
 		<input type='text' id='node-config-input-height' />
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-flip'><i class='fa'></i> Flip screen</label>
+		<input type='checkbox' id='node-config-input-flip' />
 	</div>
 </script>
 
