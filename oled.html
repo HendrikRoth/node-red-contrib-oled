@@ -456,6 +456,8 @@
 	<p>start: <b>msg.payload.start</b></p>
  	<p>stop: <b>msg.payload.stop</b></p>
 	<p>Example: <b>{"direction":"left","start":0,"stop":128}</b></p>
+	<p>If you want to disable it, you must pass the boolean <b>false</b> value as parameter.</p> 
+	<p>Possible values for scroll direction are <b>"left"</b> <b>"right"</b>  <b>"left_diagonal"</b>  <b>"right_diagonal"</b>  .</p> 
 </script>
 
 <script type='text/javascript'>
@@ -545,5 +547,49 @@
 	<p>Example: <b>{"x":1,"y":1,"p":25}</b></p>
 </script>
 
+<script type='text/javascript'>
+	RED.nodes.registerType('Image', {
+		category: 'oled',
+		color: '#FFCC66',
+        icon: 'OledImage.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function() {
+			return this.name || "Image";
+		}
+	})
+</script>
 
+<script type='text/x-red' data-template-name='Image'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="Image">
+	<p>Draws a png image.</p>
+	<p>Payload should contain the path to png file, its coordinates and clear display before displaying the image.</p>
+	<p>image: <b>msg.payload.image</b></p>
+	<p>abscissa: <b>msg.payload.x</b></p>
+	<p>ordinate: <b>msg.payload.y</b></p>
+ 	<p>clear: <b>msg.payload.clear</b></p>
+	<p>animated: <b>msg.payload.animated</b></p>
+	<p>reset: <b>msg.payload.reset</b></p>
+	<p>Example: <b>{"image": "./OledImage.png", "x":1, "y":1 , "clear":true , "animated":true}</b></p>
+	<p>the <b>x</b>, <b>y</b>, <b>clear</b>, <b>animated</b> and <b>reset</b> parameters are optional.</p>
+</script>
 

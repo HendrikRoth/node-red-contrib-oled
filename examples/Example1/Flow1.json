@@ -1,0 +1,2445 @@
+[
+    {
+        "id": "1fbc83566a03a07b",
+        "type": "subflow",
+        "name": "Oled Status",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "a1c3dcf60f15f95d"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {
+            "author": "Antonio Maza waterbrain@pelaire.com",
+            "keywords": "oled, i2c",
+            "license": "Apache-2.0"
+        },
+        "color": "#3FADB5",
+        "inputLabels": [
+            "msg imput"
+        ],
+        "icon": "node-red-contrib-blynk-ws/image.png"
+    },
+    {
+        "id": "167d8c0db2fbf5cc",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "titulo",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"size\":2,\"x\":4,\"y\":1,\"text\":\"Rpi4 Status\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 140,
+        "wires": [
+            [
+                "c61f1b52f35ae706",
+                "1a4baae390763ddd"
+            ]
+        ]
+    },
+    {
+        "id": "c61f1b52f35ae706",
+        "type": "String",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 530,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "4e8ed591713b4e21",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "rectangulo",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"x\":0,\"y\":17,\"w\":128,\"h\":48,\"color\":1}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 280,
+        "wires": [
+            [
+                "375ba257f60a9883",
+                "d582297c8e899b07"
+            ]
+        ]
+    },
+    {
+        "id": "375ba257f60a9883",
+        "type": "FillRectangle",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 770,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b6fbfb898434cc27",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "rectvacio",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"x\":1,\"y\":18,\"w\":126,\"h\":44,\"color\":0}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 320,
+        "wires": [
+            [
+                "375ba257f60a9883"
+            ]
+        ]
+    },
+    {
+        "id": "1f43032e9f2f269c",
+        "type": "NetworkIntf",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "x": 350,
+        "y": 460,
+        "wires": [
+            [
+                "5168c678562eaae2"
+            ]
+        ]
+    },
+    {
+        "id": "46e9f9818b9a0d38",
+        "type": "exec",
+        "z": "1fbc83566a03a07b",
+        "command": "vcgencmd measure_temp",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "oldrc": false,
+        "name": "CPU temp",
+        "x": 470,
+        "y": 820,
+        "wires": [
+            [
+                "03fefb49d6f5f164",
+                "4ee887a95db529ad"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "03fefb49d6f5f164",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "getCPUTemp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "\"CPU Temp: \" & $substring(msg.payload, 5, 4) & \" °C\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 740,
+        "wires": [
+            [
+                "8704f628f05cf6c8"
+            ]
+        ]
+    },
+    {
+        "id": "8704f628f05cf6c8",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "CPU Temp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{    \"size\": 1,    \"x\": 6,    \"y\": 37,    \"text\": msg.payload}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 810,
+        "y": 740,
+        "wires": [
+            [
+                "689f5bb2d49fc665",
+                "2504551d82fa4ad1"
+            ]
+        ]
+    },
+    {
+        "id": "4ee887a95db529ad",
+        "type": "debug",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "5168c678562eaae2",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "getCPUTemp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "conexion",
+                "pt": "flow",
+                "to": "\"Eth0 \" & payload.networkInterfaces.eth0.address",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 540,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ed5d91d10fa1f792",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "conexion",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{    \"size\": 1,    \"x\": 6,    \"y\": 29,    \"text\": $flowContext(\"conexion\")\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 800,
+        "y": 480,
+        "wires": [
+            [
+                "689f5bb2d49fc665"
+            ]
+        ]
+    },
+    {
+        "id": "bf51e830acaab823",
+        "type": "Loadavg",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "x": 440,
+        "y": 980,
+        "wires": [
+            [
+                "9ed89d1ab8b32ad7"
+            ]
+        ]
+    },
+    {
+        "id": "f7367a4a2e82e370",
+        "type": "CPUs",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "x": 330,
+        "y": 520,
+        "wires": [
+            [
+                "0c1a14594fba319d",
+                "025b034f3d0fa35f"
+            ]
+        ]
+    },
+    {
+        "id": "0c1a14594fba319d",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "getCPUTemp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "cpus",
+                "pt": "flow",
+                "to": "$count(payload.cpus)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "025b034f3d0fa35f",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "getmodel",
+        "rules": [
+            {
+                "t": "set",
+                "p": "model",
+                "pt": "flow",
+                "to": "payload.cpus[0].model",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 560,
+        "wires": [
+            [
+                "ed5d91d10fa1f792",
+                "5c5dbcf6ff5291f4"
+            ]
+        ]
+    },
+    {
+        "id": "5c5dbcf6ff5291f4",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "mode y cpus",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{    \"size\": 1,    \"x\": 6,    \"y\": 21,    \"text\": \"Mod: \" & $substring($flowContext(\"model\"),0,6) & \"Procs: \" & $flowContext(\"cpus\")\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 810,
+        "y": 520,
+        "wires": [
+            [
+                "689f5bb2d49fc665"
+            ]
+        ]
+    },
+    {
+        "id": "9ed89d1ab8b32ad7",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "loadavg",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t   \"size\": 1,\t   \"x\": 6,\t   \"y\": 45,\t   \"text\": \"Avg: \" & msg.payload.loadavg[0] & \" \" & msg.payload.loadavg[1] & \" \" & msg.payload.loadavg[2] \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 900,
+        "wires": [
+            [
+                "689f5bb2d49fc665"
+            ]
+        ]
+    },
+    {
+        "id": "405f47e89e436e5e",
+        "type": "Image",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 490,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "5e3868b3bd8f4fe7",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "rectangulo",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"x\":0,\"y\":0,\"w\":128,\"h\":16,\"color\":1}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 360,
+        "wires": [
+            [
+                "375ba257f60a9883"
+            ]
+        ]
+    },
+    {
+        "id": "501a31e1ec486505",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "rectvacio",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"x\":1,\"y\":1,\"w\":126,\"h\":14,\"color\":0}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 400,
+        "wires": [
+            [
+                "375ba257f60a9883"
+            ]
+        ]
+    },
+    {
+        "id": "804745fe4ab4e68d",
+        "type": "OS",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "x": 330,
+        "y": 580,
+        "wires": [
+            [
+                "283079f10dc2dcfe",
+                "b48fbcf8cd1f942f"
+            ]
+        ]
+    },
+    {
+        "id": "283079f10dc2dcfe",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "gethostname",
+        "rules": [
+            {
+                "t": "set",
+                "p": "hostname",
+                "pt": "flow",
+                "to": "payload.hostname",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 600,
+        "wires": [
+            [
+                "dd2be036e3a37080"
+            ]
+        ]
+    },
+    {
+        "id": "b48fbcf8cd1f942f",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "gettype",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ostype",
+                "pt": "flow",
+                "to": "payload.type",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 640,
+        "wires": [
+            [
+                "d496e258932b8a86"
+            ]
+        ]
+    },
+    {
+        "id": "dd2be036e3a37080",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "hostname",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{    \"size\": 1,    \"x\": 1,    \"y\": 1,    \"text\": \" HM: \" & $flowContext(\"hostname\")\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 600,
+        "wires": [
+            [
+                "689f5bb2d49fc665"
+            ]
+        ]
+    },
+    {
+        "id": "d496e258932b8a86",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "ostype",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{    \"size\": 1,    \"x\": 1,    \"y\": 7,    \"text\": \" OS: \" & $flowContext(\"ostype\")\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 640,
+        "wires": [
+            [
+                "689f5bb2d49fc665"
+            ]
+        ]
+    },
+    {
+        "id": "4e35834647931a59",
+        "type": "switch",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "property": "animated",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "jsonata"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 430,
+        "y": 760,
+        "wires": [
+            [
+                "ed5d91d10fa1f792",
+                "5c5dbcf6ff5291f4",
+                "d496e258932b8a86",
+                "dd2be036e3a37080",
+                "46e9f9818b9a0d38",
+                "bf51e830acaab823",
+                "68f0bc8a7e6bb044"
+            ]
+        ]
+    },
+    {
+        "id": "68f0bc8a7e6bb044",
+        "type": "Drives",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "x": 430,
+        "y": 1040,
+        "wires": [
+            [
+                "1f7ef392ccc15556"
+            ]
+        ]
+    },
+    {
+        "id": "1f7ef392ccc15556",
+        "type": "function",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "func": "\ntotal = msg.payload[0].size  / 1024\nunits = \"M\"\nif (total > 1024) {\n    units = \"G\"\n    total = Math.round(total / 1024* 1 )/1;}\nelse {\n\n    total = Math.round(total * 1 )/1;\n}\n\nused = msg.payload[0].used / 1024\nuunits = \"M\"\nif (used > 1024) {\n    uunits = \"G\"\n    used = Math.round(used / 1024* 10 )/10;}\nelse {\n\n    used = Math.round(used * 10 )/10;\n}\n\ntexto = \"Disk: \" + total + units + \" \" + used + uunits + \" \" + Math.round(msg.payload[0].capacity * 100) + \"%\"\ntexto = texto.replace(\".\", \",\");\nmsg.payload = {\"size\": 1, \"x\": 6, \"y\": 53, \"text\": texto};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 1040,
+        "wires": [
+            [
+                "689f5bb2d49fc665"
+            ]
+        ]
+    },
+    {
+        "id": "a1c3dcf60f15f95d",
+        "type": "switch",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "start",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "5f61107fede7fc57"
+            ],
+            [
+                "05a8dcd859f3a1be"
+            ]
+        ]
+    },
+    {
+        "id": "5f61107fede7fc57",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "logo",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"image\":\"/home/waterbrain/raspberrypi-logo.png\",\"x\":44,\"y\":17,\"clear\":true}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 120,
+        "wires": [
+            [
+                "405f47e89e436e5e",
+                "a3fce2f46084ce6b"
+            ]
+        ]
+    },
+    {
+        "id": "689f5bb2d49fc665",
+        "type": "link out",
+        "z": "1fbc83566a03a07b",
+        "name": "string entra",
+        "mode": "link",
+        "links": [
+            "3dd98eccf1517932"
+        ],
+        "x": 965,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "3dd98eccf1517932",
+        "type": "link in",
+        "z": "1fbc83566a03a07b",
+        "name": "string salida",
+        "links": [
+            "689f5bb2d49fc665"
+        ],
+        "x": 245,
+        "y": 40,
+        "wires": [
+            [
+                "c61f1b52f35ae706"
+            ]
+        ]
+    },
+    {
+        "id": "d582297c8e899b07",
+        "type": "delay",
+        "z": "1fbc83566a03a07b",
+        "name": "bucle 5",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 140,
+        "y": 320,
+        "wires": [
+            [
+                "4e8ed591713b4e21",
+                "b6fbfb898434cc27",
+                "5e3868b3bd8f4fe7",
+                "501a31e1ec486505",
+                "1f43032e9f2f269c",
+                "f7367a4a2e82e370",
+                "804745fe4ab4e68d"
+            ]
+        ]
+    },
+    {
+        "id": "2504551d82fa4ad1",
+        "type": "delay",
+        "z": "1fbc83566a03a07b",
+        "name": "bucle 2",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 120,
+        "y": 660,
+        "wires": [
+            [
+                "4e35834647931a59"
+            ]
+        ]
+    },
+    {
+        "id": "05a8dcd859f3a1be",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 200,
+        "wires": [
+            [
+                "d582297c8e899b07",
+                "2504551d82fa4ad1",
+                "1384c14f43abdcd8"
+            ]
+        ]
+    },
+    {
+        "id": "1384c14f43abdcd8",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "rectangulo",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"x\":0,\"y\":0,\"w\":128,\"h\":64,\"color\":0}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 180,
+        "wires": [
+            [
+                "375ba257f60a9883"
+            ]
+        ]
+    },
+    {
+        "id": "a3fce2f46084ce6b",
+        "type": "delay",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 620,
+        "y": 140,
+        "wires": [
+            [
+                "167d8c0db2fbf5cc"
+            ]
+        ]
+    },
+    {
+        "id": "8dd76ec78318298e",
+        "type": "delay",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 140,
+        "y": 400,
+        "wires": [
+            [
+                "2504551d82fa4ad1"
+            ]
+        ]
+    },
+    {
+        "id": "1a4baae390763ddd",
+        "type": "delay",
+        "z": "1fbc83566a03a07b",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 920,
+        "y": 180,
+        "wires": [
+            [
+                "4e8ed591713b4e21",
+                "b6fbfb898434cc27",
+                "5e3868b3bd8f4fe7",
+                "501a31e1ec486505",
+                "8dd76ec78318298e",
+                "1f43032e9f2f269c",
+                "f7367a4a2e82e370",
+                "804745fe4ab4e68d"
+            ]
+        ]
+    },
+    {
+        "id": "bf0b31ad452185bc",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "07a9d6f4b3da2c25",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 380,
+        "wires": [
+            [
+                "bd40e78e5e161fb7",
+                "c82ea57b5b2cc36b"
+            ]
+        ]
+    },
+    {
+        "id": "4ae37cbd5b043d72",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload.x",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "p": "payload.y",
+                "v": "16",
+                "vt": "num"
+            },
+            {
+                "p": "payload.w",
+                "v": "128",
+                "vt": "num"
+            },
+            {
+                "p": "payload.h",
+                "v": "64",
+                "vt": "num"
+            },
+            {
+                "p": "payload.color",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 190,
+        "y": 560,
+        "wires": [
+            [
+                "755b5638a256dd79"
+            ]
+        ]
+    },
+    {
+        "id": "936252af3768eb24",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload.x",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "p": "payload.y",
+                "v": "11",
+                "vt": "num"
+            },
+            {
+                "p": "payload.p",
+                "v": "75",
+                "vt": "num"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"x\":1,\"y\":1,\"p\":75}",
+        "payloadType": "json",
+        "x": 230,
+        "y": 480,
+        "wires": [
+            [
+                "22de7b1191839f21"
+            ]
+        ]
+    },
+    {
+        "id": "ac35aea012b892de",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.15",
+        "topic": "",
+        "payload": "{\"x\":2,\"y\":18,\"w\":125,\"h\":45,\"color\":0}",
+        "payloadType": "json",
+        "x": 190,
+        "y": 640,
+        "wires": [
+            [
+                "755b5638a256dd79"
+            ]
+        ]
+    },
+    {
+        "id": "8d4826f5f49d11ad",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload.x",
+                "v": "40",
+                "vt": "num"
+            },
+            {
+                "p": "payload.y",
+                "v": "11",
+                "vt": "num"
+            },
+            {
+                "p": "payload.p",
+                "v": "75",
+                "vt": "num"
+            },
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"x\":108,\"y\":1,\"p\":25}",
+        "payloadType": "json",
+        "x": 180,
+        "y": 440,
+        "wires": [
+            [
+                "f0039e7ebb3ba50e"
+            ]
+        ]
+    },
+    {
+        "id": "4673fbee4a4bcf61",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.3",
+        "topic": "",
+        "payload": "{\"size\":2,\"x\":4,\"y\":1,\"text\":\"Rpi4 Status\"}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 720,
+        "wires": [
+            [
+                "de5f61596848a2ea"
+            ]
+        ]
+    },
+    {
+        "id": "b968d9118952720b",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.3",
+        "topic": "",
+        "payload": "{\"size\":1,\"x\":4,\"y\":9,\"text\":\"Node Red Oled 2\"}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 760,
+        "wires": [
+            [
+                "de5f61596848a2ea"
+            ]
+        ]
+    },
+    {
+        "id": "935d0889a51def30",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.3",
+        "topic": "",
+        "payload": "{\"size\":1,\"x\":4,\"y\":17,\"text\":\"Node Red Oled 3\"}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 800,
+        "wires": [
+            [
+                "de5f61596848a2ea"
+            ]
+        ]
+    },
+    {
+        "id": "e79c59c297280273",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.3",
+        "topic": "",
+        "payload": "{\"size\":1,\"x\":4,\"y\":25,\"text\":\"Node Red Oled 4\"}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 840,
+        "wires": [
+            [
+                "de5f61596848a2ea"
+            ]
+        ]
+    },
+    {
+        "id": "682124b45f1a8f76",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "jsonata",
+        "x": 210,
+        "y": 1220,
+        "wires": [
+            [
+                "208d7cb9e935e59b"
+            ]
+        ]
+    },
+    {
+        "id": "471c8acc563365bf",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "jsonata",
+        "x": 210,
+        "y": 1180,
+        "wires": [
+            [
+                "208d7cb9e935e59b"
+            ]
+        ]
+    },
+    {
+        "id": "786043206e2df144",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "izq",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"direction\":\"left\",\"start\":0,\"stop\":15}",
+        "payloadType": "json",
+        "x": 990,
+        "y": 1540,
+        "wires": [
+            [
+                "c373b526da23d731"
+            ]
+        ]
+    },
+    {
+        "id": "13a4bb2ce26456e8",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "jsonata",
+        "x": 190,
+        "y": 1380,
+        "wires": [
+            [
+                "d8e1d6260fea6b1a"
+            ]
+        ]
+    },
+    {
+        "id": "00ddb4fda913481a",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "jsonata",
+        "x": 190,
+        "y": 1340,
+        "wires": [
+            [
+                "d8e1d6260fea6b1a"
+            ]
+        ]
+    },
+    {
+        "id": "8bc1b8326ba8e64d",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":1,\"y0\":1,\"x1\":128,\"y1\":1,\"color\":1}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 1460,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "69d5192171f54064",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":4,\"y0\":8,\"x1\":128,\"y1\":8,\"color\":1}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 1520,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "51984429dbf1fb8c",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "der",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"direction\":\"right\",\"start\":0,\"stop\":15}",
+        "payloadType": "json",
+        "x": 990,
+        "y": 1580,
+        "wires": [
+            [
+                "c373b526da23d731"
+            ]
+        ]
+    },
+    {
+        "id": "7f2a9ef032898730",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 730,
+        "y": 1200,
+        "wires": [
+            [
+                "e4cbe25ba19dee46"
+            ]
+        ]
+    },
+    {
+        "id": "b46cc6f140789827",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 730,
+        "y": 1260,
+        "wires": [
+            [
+                "3da681d564c2227b"
+            ]
+        ]
+    },
+    {
+        "id": "5776395cdd888417",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "stop",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 990,
+        "y": 1620,
+        "wires": [
+            [
+                "c373b526da23d731"
+            ]
+        ]
+    },
+    {
+        "id": "417be58331edbc5d",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "left diagonal",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"direction\":\"left_diagonal\",\"start\":0,\"stop\":128}",
+        "payloadType": "json",
+        "x": 990,
+        "y": 1660,
+        "wires": [
+            [
+                "c373b526da23d731"
+            ]
+        ]
+    },
+    {
+        "id": "a414c5831af96fc8",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "right diagonal",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"direction\":\"right_diagonal\",\"start\":0,\"stop\":128}",
+        "payloadType": "json",
+        "x": 990,
+        "y": 1700,
+        "wires": [
+            [
+                "c373b526da23d731"
+            ]
+        ]
+    },
+    {
+        "id": "2ca2778e7718b8ff",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":4,\"y0\":16,\"x1\":128,\"y1\":16,\"color\":1}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 1580,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "bc103bfaf1d301c0",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":4,\"y0\":24,\"x1\":128,\"y1\":24,\"color\":1}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 1640,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "de5f61596848a2ea",
+        "type": "String",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 410,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "bd40e78e5e161fb7",
+        "type": "Clear",
+        "z": "bf0b31ad452185bc",
+        "name": "oled",
+        "display": "9a288fe6eaa83734",
+        "x": 410,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "208d7cb9e935e59b",
+        "type": "Dimmed",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 440,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "d8e1d6260fea6b1a",
+        "type": "Invertion",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 460,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "e4cbe25ba19dee46",
+        "type": "Turn-on",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 860,
+        "y": 1200,
+        "wires": []
+    },
+    {
+        "id": "3da681d564c2227b",
+        "type": "Turn-off",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 860,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "c0c23cdd744335f2",
+        "type": "Pixel",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 450,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "5ef56d42c580fb3f",
+        "type": "Line",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 470,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "755b5638a256dd79",
+        "type": "FillRectangle",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 370,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "c373b526da23d731",
+        "type": "Scroll",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 1230,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "f0039e7ebb3ba50e",
+        "type": "Battery",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 380,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "22de7b1191839f21",
+        "type": "Wifi",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 390,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "3a326de3982f3ed4",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.3",
+        "topic": "",
+        "payload": "{\"size\":1,\"x\":4,\"y\":33,\"text\":\"Node Red Oled 5\"}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 880,
+        "wires": [
+            [
+                "de5f61596848a2ea"
+            ]
+        ]
+    },
+    {
+        "id": "afbd4be0f1c0e41b",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.3",
+        "topic": "",
+        "payload": "{\"size\":1,\"x\":4,\"y\":41,\"text\":\"Node Red Oled 6\"}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 920,
+        "wires": [
+            [
+                "de5f61596848a2ea"
+            ]
+        ]
+    },
+    {
+        "id": "8828734b5b987d8d",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.3",
+        "topic": "",
+        "payload": "{\"size\":1,\"x\":4,\"y\":47,\"text\":\"Node Red Oled 7\"}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 960,
+        "wires": [
+            [
+                "de5f61596848a2ea"
+            ]
+        ]
+    },
+    {
+        "id": "dd51280973463ea0",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.3",
+        "topic": "",
+        "payload": "{\"size\":1,\"x\":4,\"y\":52,\"text\":\"Node Red Oled 8\"}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 1000,
+        "wires": [
+            [
+                "de5f61596848a2ea"
+            ]
+        ]
+    },
+    {
+        "id": "020b12f67ea97169",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":4,\"y0\":32,\"x1\":128,\"y1\":32,\"color\":2}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 1700,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "d37ecb32bd9c728f",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":4,\"y0\":40,\"x1\":128,\"y1\":40,\"color\":3}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 1740,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "65b84eb30e73667b",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":1,\"y0\":48,\"x1\":128,\"y1\":48,\"color\":1}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 1800,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "490d3cfce37df301",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":1,\"y0\":56,\"x1\":128,\"y1\":56,\"color\":1}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 1860,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "36934ae7f9982316",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "izq",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"direction\":\"left\",\"start\":0,\"stop\":14}",
+        "payloadType": "json",
+        "x": 990,
+        "y": 1760,
+        "wires": [
+            [
+                "c373b526da23d731"
+            ]
+        ]
+    },
+    {
+        "id": "069f558326551615",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "izq",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"direction\":\"left\",\"start\":0,\"stop\":1}",
+        "payloadType": "json",
+        "x": 990,
+        "y": 1820,
+        "wires": [
+            [
+                "c373b526da23d731"
+            ]
+        ]
+    },
+    {
+        "id": "126b9378898419f7",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "izq",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"direction\":\"right\",\"start\":0,\"stop\":1}",
+        "payloadType": "json",
+        "x": 990,
+        "y": 1880,
+        "wires": [
+            [
+                "c373b526da23d731"
+            ]
+        ]
+    },
+    {
+        "id": "cfbb21f83b2e7925",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "OledImage",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\":\"OledImage.png\",\"x\":20,\"y\":20}",
+        "payloadType": "json",
+        "x": 620,
+        "y": 620,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
+    },
+    {
+        "id": "e99f4e7de43e6338",
+        "type": "Image",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 810,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "df479b395aa26bfa",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "WaterBrain",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\":\"/home/waterbrain/.node-red/node_modules/node-red-contrib-oled/resources/WaterBrain.png\",\"clear\":true}",
+        "payloadType": "json",
+        "x": 620,
+        "y": 560,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
+    },
+    {
+        "id": "fd8ced2e30b53177",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "raspberrypi-logo.png",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\":\"raspberrypi-logo.png\",\"x\":44,\"y\":17,\"clear\":true}",
+        "payloadType": "json",
+        "x": 640,
+        "y": 840,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
+    },
+    {
+        "id": "868d09d6472b4a05",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "rpi-frambuesa-blanco",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\":\"rpi-frambuesa.png\",\"x\":0,\"y\":10,\"clear\":true}",
+        "payloadType": "json",
+        "x": 640,
+        "y": 900,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
+    },
+    {
+        "id": "31c4f84f1c3a38db",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "OledImage",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\":\"OledImage.png\",\"x\":0,\"y\":0}",
+        "payloadType": "json",
+        "x": 600,
+        "y": 500,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
+    },
+    {
+        "id": "08b36b478609356f",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "noexiste",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\":\"notafile.png\"}",
+        "payloadType": "json",
+        "x": 600,
+        "y": 440,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
+    },
+    {
+        "id": "c23299e50ac0dd91",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"size\":1,\"x\":4,\"y\":52,\"text\":\"012345678901234567890123456789\"}",
+        "payloadType": "json",
+        "x": 210,
+        "y": 1060,
+        "wires": [
+            [
+                "de5f61596848a2ea"
+            ]
+        ]
+    },
+    {
+        "id": "14ae746c4c98d3d9",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "OledImage false",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\": \"rpi-frambuesa.png\",\"clear\":false,\"animated\":false}",
+        "payloadType": "json",
+        "x": 640,
+        "y": 760,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
+    },
+    {
+        "id": "764e64b272921237",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "OledImage rest",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\":\"rpi-frambuesa.png\",\"clear\":false,\"reset\":true}",
+        "payloadType": "json",
+        "x": 620,
+        "y": 800,
+        "wires": [
+            [
+                "e99f4e7de43e6338",
+                "586965f196a007ab"
+            ]
+        ]
+    },
+    {
+        "id": "b673f1ff78e42e4f",
+        "type": "change",
+        "z": "bf0b31ad452185bc",
+        "name": "animated",
+        "rules": [
+            {
+                "t": "set",
+                "p": "animated",
+                "pt": "global",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 900,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "586965f196a007ab",
+        "type": "change",
+        "z": "bf0b31ad452185bc",
+        "name": "animated",
+        "rules": [
+            {
+                "t": "set",
+                "p": "animated",
+                "pt": "global",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1000,
+        "y": 800,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c82ea57b5b2cc36b",
+        "type": "change",
+        "z": "bf0b31ad452185bc",
+        "name": "animated",
+        "rules": [
+            {
+                "t": "set",
+                "p": "animated",
+                "pt": "global",
+                "to": "false",
+                "tot": "bool"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{     \"image\": \"/home/waterbrain/rpi frambuesa.png\",     \"clear\": false,     \"reset\": true }",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 320,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
+    },
+    {
+        "id": "6d7e3623f4f02b9f",
+        "type": "delay",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 820,
+        "y": 660,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
+    },
+    {
+        "id": "c87ab31dea7dae93",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "OledImage true",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\":\"Oledrpi32x32.png\",\"clear\":true,\"animated\":true}",
+        "payloadType": "json",
+        "x": 600,
+        "y": 680,
+        "wires": [
+            [
+                "6d7e3623f4f02b9f",
+                "b673f1ff78e42e4f"
+            ]
+        ]
+    },
+    {
+        "id": "6fb579570ff4bf4e",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "start",
+        "payloadType": "str",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "47e98459d676c813"
+            ]
+        ]
+    },
+    {
+        "id": "d1ce21e4c04caae5",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "stop",
+        "payloadType": "str",
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "47e98459d676c813"
+            ]
+        ]
+    },
+    {
+        "id": "47e98459d676c813",
+        "type": "subflow:1fbc83566a03a07b",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "x": 330,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "9a288fe6eaa83734",
+        "type": "oled-config",
+        "name": "oled",
+        "width": "128",
+        "height": "64",
+        "address": "0x3D"
+    }
+]

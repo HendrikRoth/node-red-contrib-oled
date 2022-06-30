@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-oled",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Node-Red node for controlling OLED displays",
   "main": "index.js",
   "scripts": {},
@@ -18,9 +18,12 @@
   },
   "homepage": "https://github.com/HendrikRoth/node-red-contrib-oled#readme",
   "dependencies": {
-    "i2c-bus": "^5.2.0",
+    "i2c-bus": "^5.2.2",
     "oled-font-5x7": "^1.0.3",
-    "oled-i2c-bus": "^1.0.11"
+    "oled-i2c-bus": "^1.0.12",
+    "pngparse": "^2.0.1",
+    "pngjs": "^6.0.0",
+    "time-events-manager": "^0.1.1"
   },
   "node-red": {
     "nodes": {

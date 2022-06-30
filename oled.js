@@ -1,7 +1,15 @@
-var i2c = require('i2c-bus')
-var i2cBus = i2c.openSync(1)
-var Oled = require('oled-i2c-bus')
-var font = require('oled-font-5x7')
+
+var fs = require('fs');
+var PNG = require('pngjs').PNG;
+var i2c = require('i2c-bus');
+var i2cBus = i2c.openSync(1);
+var Oled = require('oled-i2c-bus');
+var font = require('oled-font-5x7');
+//var timeoutCollection = require('time-events-manager/TimeoutCollection');
+var timers = [];
+var numTimers = 0;
+myInterval = null;
+var init = true;
 
 module.exports = function(RED) {
 	var displays = {}
@@ -127,6 +135,7 @@ module.exports = function(RED) {
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
 			check(self.display, n)
+			//console.log('Scroll ' + "parms: "  + msg.payload);
 			try {
 				var p = msg.payload
 				if (typeof p !== 'undefined') {
@@ -135,6 +144,7 @@ module.exports = function(RED) {
 					}
 					else if (typeof p === 'object') {
 					self.display.startScroll(p.direction || 'left', p.start || 0, p.stop || 128)
+					//console.log('Startscroll ' + "direccion : "  + p.direction +  " start: "  + p.start + " stop  "  + p.stop + " payload  " + msg.payload.direction);
 					} 
 				}	
 			} catch (err) {
@@ -224,6 +234,117 @@ module.exports = function(RED) {
 		})
 	}
 
+	'---------------------------------- drawPNGImage ----------------------------------'
+	function Image(n) {
+		var self = this
+		var dirresources = __dirname + "/resources/";
+		//console.log(dirresources);
+		RED.nodes.createNode(self, n)
+		self.display = displays[n.display]
+		self.on('input', function(msg) {
+			check(self.display, n)
+			//console.log("Oled timers actives: " + timeoutCollection.getAll());
+
+			try {
+				init = true;
+				var p = msg.payload
+				//var files = fs.readdirSync('.');
+				//files.forEach(function(element) {
+  				//		console.log("ficheros en pwd " + element );
+ 				//	 });
+				//console.log("entra en Image(n) " + files );
+				
+				if (typeof p.image === 'string' && !p.image.includes("/")) {
+						p.image = dirresources + p.image;
+					}
+				try {
+					if (! fs.statSync(p.image).isFile())  {
+						//console.log("file " + p.image + "not exist.");
+					}
+					} catch (err) {
+						p.image = dirresources + "notafile.png";
+						//console.log("new file catch " + p.image);
+						p.x = 0;
+						p.y = 17;
+						self.display.clearDisplay();
+						self.error(err)
+				}
+				if (typeof p.clear === 'boolean' && p.clear) {
+						self.display.clearDisplay();
+
+					}
+				if (typeof p.reset === 'boolean' && p.reset) {
+						timers.forEach(function(entry){
+    					//console.log("myInterval cancelado  " + entry);
+						clearInterval(entry);
+						entry = null;
+						});
+						numTimers = 0;
+						timers = [];
+						self.display.clearDisplay();
+						if (typeof pxb === 'number'){pxb = null}
+						if (typeof pyb === 'number'){pyb = null}
+						if (typeof pdxb === 'number'){pdxb = null}
+						if (typeof pdyb === 'number'){pdyb = null}
+						return
+
+					}
+				try {
+					fs.createReadStream(p.image)
+					.pipe(new PNG({ filterType: 4 }))
+					.on('parsed', function () {
+						if (typeof p.animated === 'boolean' && p.animated) {
+							var pxb = self.display.WIDTH/2;
+							var pyb = self.display.HEIGHT/2;
+							var pdxb = 2;
+							var pdyb = -2;
+							let myInterval = setInterval(() => { drawPseudo(this, self.display, pxb, pyb, pdxb, pdyb ) }, 10);
+							timers.push(myInterval);
+							numTimers += 1;
+						}
+						else {
+							self.display.drawRGBAImage(this, p.x || Math.floor((self.display.WIDTH - this.width) / 2), p.y || Math.floor((self.display.HEIGHT - this.height) / 2));
+						}
+						});
+				} catch (err) {
+				self.error(err)
+				}
+			} catch (err) {
+				self.error(err)
+			}
+		})
+	}
+
+	function drawPseudo(image, display, pxb, pyb, pdxb, pdyb ) {
+		var x = 0;
+		var y = 0;
+		var dx = 0;
+		var dy = 0;
+		var init;
+
+		if ( typeof this.init === "undefined" || this.init === true) { 
+			this.init = false;
+			this.x = pxb;
+			this.y = pyb;
+			this.dx = pdxb;
+			this.dy = pdyb; 
+       } 
+	
+    	display.clearDisplay();
+		display.fillRect(0,0,pxb * 2 , pyb + 30 ,1,true)
+		display.fillRect(1,1,(pxb * 2 - 2), (pyb + 28) ,0,true)
+		display.drawRGBAImage(image, this.x, this.y);
+    	if(this.x + this.dx > display.WIDTH  - image.width || this.x  < 1) {
+        	this.dx = -this.dx;
+    	}
+    	if(this.y + this.dy > display.HEIGHT - image.height|| this.y  < 1) {
+        	this.dy = -this.dy;
+    	}
+    
+    	this.x += this.dx;
+    	this.y += this.dy;
+}
+
 
 	'---------------------------------- Registration ----------------------------------'
 	RED.nodes.registerType('Clear', OledFunction('clearDisplay'))
@@ -239,4 +360,5 @@ module.exports = function(RED) {
 	RED.nodes.registerType('Scroll', Scroll)
 	RED.nodes.registerType('Battery', Battery)
 	RED.nodes.registerType('Wifi', Wifi)
+	RED.nodes.registerType('Image', Image)
 }
