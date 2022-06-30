@@ -1,5 +1,8 @@
 node-red-contrib-oled
 =====================
+![Image text](https://github.com/HendrikRoth/node-red-contrib-oled/blob/master/screen%20example.png)
+
+
 
 Node-Red node to talk to OLED displays, connected by i2c.
 
