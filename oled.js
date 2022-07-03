@@ -10,6 +10,33 @@ var timers = [];
 var numTimers = 0;
 myInterval = null;
 var init = true;
+var exec = require('child_process').exec;
+
+exec('sudo systemctl status RGB_Cooling_HAT_C_1 | grep " Active: active (running)" | wc -l',
+    function (error, stdout, stderr) {
+        //console.log('stdout: ' + stdout);
+        //console.log('stderr: ' + stderr);
+        if (stdout != 0) {
+             console.error('RGB_Cooling_HAT_C_1 service running. node-red-contrib-oled may be working wrong. please stop it.');
+        }
+    });
+exec('sudo systemctl status RGB_Cooling_HAT_C | grep " Active: active (running)" | wc -l',
+    function (error, stdout, stderr) {
+        //console.log('stdout: ' + stdout);
+        //console.log('stderr: ' + stderr);
+        if (stdout != 0) {
+             console.error('RGB_Cooling_HAT_C service running. node-red-contrib-oled may be working wrong. please stop it.'); 
+        }
+    });
+
+exec('sudo systemctl status RGB_Cooling_HAT | grep " Active: active (running)" | wc -l',
+    function (error, stdout, stderr) {
+        //console.log('stdout: ' + stdout);
+        //console.log('stderr: ' + stderr);
+        if (stdout != 0) {
+             console.error('RGB_Cooling_HAT service running. node-red-contrib-oled may be working wrong. please stop it.');
+        }
+    });
 
 module.exports = function(RED) {
 	var displays = {}
@@ -282,8 +309,6 @@ module.exports = function(RED) {
 						numTimers = 0;
 						timers = [];
 						self.display.clearDisplay();
-						if (typeof pxb === 'number'){pxb = null}
-						if (typeof pyb === 'number'){pyb = null}
 						if (typeof pdxb === 'number'){pdxb = null}
 						if (typeof pdyb === 'number'){pdyb = null}
 						return
@@ -294,11 +319,9 @@ module.exports = function(RED) {
 					.pipe(new PNG({ filterType: 4 }))
 					.on('parsed', function () {
 						if (typeof p.animated === 'boolean' && p.animated) {
-							var pxb = self.display.WIDTH/2;
-							var pyb = self.display.HEIGHT/2;
-							var pdxb = 2;
-							var pdyb = -2;
-							let myInterval = setInterval(() => { drawPseudo(this, self.display, pxb, pyb, pdxb, pdyb ) }, 10);
+							var pdxb = 1;
+							var pdyb = -1;
+							let myInterval = setInterval(() => { drawPseudo(this, self.display, pdxb, pdyb ) }, 10);
 							timers.push(myInterval);
 							numTimers += 1;
 						}
@@ -315,24 +338,26 @@ module.exports = function(RED) {
 		})
 	}
 
-	function drawPseudo(image, display, pxb, pyb, pdxb, pdyb ) {
+	function drawPseudo(image, display, pdxb, pdyb ) {
 		var x = 0;
 		var y = 0;
 		var dx = 0;
 		var dy = 0;
 		var init;
-
-		if ( typeof this.init === "undefined" || this.init === true) { 
+		var image;
+		if ( typeof this.init === "undefined" || this.init === true || this.image !== image) { 
 			this.init = false;
-			this.x = pxb;
-			this.y = pyb;
+			this.image = image;
+			this.x = 1;
+			this.y = 1;
 			this.dx = pdxb;
 			this.dy = pdyb; 
+			//console.log("entra drawPseudo this.x " + this.x + " this.y " + this.y + " this.dx " + this.dx + " this.dy " + this.dy);
        } 
 	
     	display.clearDisplay();
-		display.fillRect(0,0,pxb * 2 , pyb + 30 ,1,true)
-		display.fillRect(1,1,(pxb * 2 - 2), (pyb + 28) ,0,true)
+		display.fillRect(0,0,display.WIDTH , display.HEIGHT ,1,true)
+		display.fillRect(1,1,display.WIDTH - 2, display.HEIGHT - 2 ,0,true)
 		display.drawRGBAImage(image, this.x, this.y);
     	if(this.x + this.dx > display.WIDTH  - image.width || this.x  < 1) {
         	this.dx = -this.dx;
