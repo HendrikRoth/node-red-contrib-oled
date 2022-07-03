@@ -431,7 +431,7 @@
         "z": "1fbc83566a03a07b",
         "name": "",
         "display": "9a288fe6eaa83734",
-        "x": 490,
+        "x": 530,
         "y": 120,
         "wires": []
     },
@@ -698,7 +698,7 @@
         "y": 180,
         "wires": [
             [
-                "5f61107fede7fc57"
+                "7d36691afa95bc5a"
             ],
             [
                 "05a8dcd859f3a1be"
@@ -715,7 +715,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"image\":\"/home/waterbrain/raspberrypi-logo.png\",\"x\":44,\"y\":17,\"clear\":true}",
+                "to": "{\"image\":\"/home/waterbrain/yahabommlogo-2-128x20.png\",\"x\":0,\"y\":25,\"clear\":true}",
                 "tot": "json"
             }
         ],
@@ -724,7 +724,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 290,
+        "x": 370,
         "y": 120,
         "wires": [
             [
@@ -880,8 +880,8 @@
         "z": "1fbc83566a03a07b",
         "name": "",
         "pauseType": "delay",
-        "timeout": "1",
-        "timeoutUnits": "seconds",
+        "timeout": "10",
+        "timeoutUnits": "milliseconds",
         "rate": "1",
         "nbRateUnits": "1",
         "rateUnits": "second",
@@ -891,7 +891,7 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 620,
+        "x": 630,
         "y": 140,
         "wires": [
             [
@@ -953,6 +953,59 @@
                 "1f43032e9f2f269c",
                 "f7367a4a2e82e370",
                 "804745fe4ab4e68d"
+            ]
+        ]
+    },
+    {
+        "id": "7d36691afa95bc5a",
+        "type": "change",
+        "z": "1fbc83566a03a07b",
+        "name": "reset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"image\":\"rpi-frambuesa.png\",\"clear\":false,\"reset\":true}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "405f47e89e436e5e",
+                "99e20edf0916b858"
+            ]
+        ]
+    },
+    {
+        "id": "99e20edf0916b858",
+        "type": "delay",
+        "z": "1fbc83566a03a07b",
+        "name": "delay",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 290,
+        "y": 160,
+        "wires": [
+            [
+                "5f61107fede7fc57"
             ]
         ]
     },
@@ -1706,7 +1759,7 @@
         "name": "",
         "display": "9a288fe6eaa83734",
         "x": 1230,
-        "y": 1580,
+        "y": 1600,
         "wires": []
     },
     {
@@ -2104,7 +2157,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"image\":\"rpi-frambuesa.png\",\"x\":0,\"y\":10,\"clear\":true}",
+        "payload": "{\"image\":\"rpi-frambuesa.png\",\"x\":0,\"y\":10,\"clear\":true,\"animated\":true}",
         "payloadType": "json",
         "x": 640,
         "y": 900,
@@ -2388,7 +2441,7 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "onceDelay": 0.1,
+        "onceDelay": "2",
         "topic": "",
         "payload": "start",
         "payloadType": "str",
@@ -2433,6 +2486,271 @@
         "x": 330,
         "y": 120,
         "wires": []
+    },
+    {
+        "id": "52336f0d035c104b",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "yahaboom 102x16",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\":\"/home/waterbrain/yahabommlogo-2-102x16.png\",\"x\":0,\"y\":17,\"clear\":true,\"animated\":true}",
+        "payloadType": "json",
+        "x": 610,
+        "y": 960,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
+    },
+    {
+        "id": "9dc41c4b3675882a",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "yahaboom 128x20",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\":\"/home/waterbrain/yahabommlogo-2-128x20.png\",\"x\":1,\"y\":1,\"clear\":true,\"animated\":true}",
+        "payloadType": "json",
+        "x": 610,
+        "y": 1020,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
+    },
+    {
+        "id": "563fd1a5ecfd5fbd",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":5,\"y0\":1,\"x1\":5,\"y1\":11,\"color\":1}",
+        "payloadType": "json",
+        "x": 470,
+        "y": 1540,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "8af050e7e537ed15",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":2,\"y0\":3,\"x1\":9,\"y1\":8,\"color\":1}",
+        "payloadType": "json",
+        "x": 470,
+        "y": 1600,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "5a5a4ec71e11dca0",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":2,\"y0\":9,\"x1\":8,\"y1\":3,\"color\":1}",
+        "payloadType": "json",
+        "x": 470,
+        "y": 1660,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "c40cc8b82d9a6bf0",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":5,\"y0\":1,\"x1\":9,\"y1\":3,\"color\":1}",
+        "payloadType": "json",
+        "x": 450,
+        "y": 1720,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "6983eb20e1f4a828",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "0.4",
+        "topic": "",
+        "payload": "{\"x0\":5,\"y0\":11,\"x1\":8,\"y1\":9,\"color\":1}",
+        "payloadType": "json",
+        "x": 450,
+        "y": 1780,
+        "wires": [
+            [
+                "5ef56d42c580fb3f"
+            ]
+        ]
+    },
+    {
+        "id": "f147d4803529bcad",
+        "type": "Bluetooth",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 800,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "8e3bb2d96c6c3e73",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload.x",
+                "v": "118",
+                "vt": "num"
+            },
+            {
+                "p": "payload.y",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 570,
+        "y": 260,
+        "wires": [
+            [
+                "f147d4803529bcad"
+            ]
+        ]
+    },
+    {
+        "id": "3dd98a14985a9027",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "OledImage",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\":\"OledBluetooth.png\",\"x\":20,\"y\":20}",
+        "payloadType": "json",
+        "x": 620,
+        "y": 360,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
+    },
+    {
+        "id": "e378b344f9edd1c5",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "noexiste",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"image\":\"note.png\"}",
+        "payloadType": "json",
+        "x": 870,
+        "y": 439,
+        "wires": [
+            [
+                "e99f4e7de43e6338"
+            ]
+        ]
     },
     {
         "id": "9a288fe6eaa83734",

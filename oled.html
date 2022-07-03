@@ -505,6 +505,55 @@
 
 
 <script type='text/javascript'>
+	RED.nodes.registerType('Bluetooth', {
+		category: 'oled',
+		color: '#FFCC66',
+		icon: 'OledBluetooth.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "Bluetooth";
+		}
+	})
+</script>
+
+<script type='text/x-red' data-template-name='Bluetooth'>
+	<div class='form-row'>
+		<label for='node-config-input-display'><i class='fa'></i> Display</label>
+		<input type='text' id='node-input-display'/>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
+		<input type='text' id='node-input-name'/>
+	</div>
+</script>
+
+<script type="text/x-red" data-help-name="Bluetooth">
+	<p>Draws a Bluetooth logo (w:8, h:10)</p>
+	<p>Payload should contain coordinates of the start Bluetooth logo</p>
+	<p>abscissa: <b>msg.payload.x</b></p>
+	<p>ordinate: <b>msg.payload.y</b></p>
+	<p>Example: <b>{"x":1,"y":1}</b></p>
+</script>
+
+
+
+
+
+
+
+
+
+<script type='text/javascript'>
 	RED.nodes.registerType('Wifi', {
 		category: 'oled',
 		color: '#FFCC66',

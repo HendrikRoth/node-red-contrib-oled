@@ -220,6 +220,25 @@ module.exports = function(RED) {
 			}
 		})
 	}
+	'---------------------------------- Bluetooth ----------------------------------'
+	function Bluetooth(n) {
+		var self = this
+		RED.nodes.createNode(self, n)
+		self.display = displays[n.display]
+		self.on('input', function (msg) {
+			check(self.display, n)
+			try {
+				var p = msg.payload
+				self.display.drawLine(p.x + 5, p.y +1 , p.x + 5, p.y + 11, 1)
+				self.display.drawLine(p.x +2 , p.y + 3, p.x + 9, p.y + 8, 1)
+				self.display.drawLine(p.x + 2, p.y + 9, p.x +8 , p.y + 3, 1)
+				self.display.drawLine(p.x + 5, p.y + 1, p.x + 9, p.y + 3, 1)
+				self.display.drawLine(p.x + 5, p.y + 11, p.x + 8, p.y + 9, 1)
+			} catch (err) {
+				self.error(err)
+			}
+		})
+	}
 
 	'---------------------------------- Wifi ----------------------------------'
 	function Wifi(n) {
@@ -282,6 +301,7 @@ module.exports = function(RED) {
 				//console.log("entra en Image(n) " + files );
 				
 				if (typeof p.image === 'string' && !p.image.includes("/")) {
+						tryImage = p.image;
 						p.image = dirresources + p.image;
 					}
 				try {
@@ -295,6 +315,12 @@ module.exports = function(RED) {
 						p.y = 17;
 						self.display.clearDisplay();
 						self.error(err)
+						self.display.writeString(
+							font,
+							1, tryImage ,
+							1,
+							typeof p.wrapping === 'undefined' ? n.wrapping : p.wrapping
+					)
 				}
 				if (typeof p.clear === 'boolean' && p.clear) {
 						self.display.clearDisplay();
@@ -385,5 +411,7 @@ module.exports = function(RED) {
 	RED.nodes.registerType('Scroll', Scroll)
 	RED.nodes.registerType('Battery', Battery)
 	RED.nodes.registerType('Wifi', Wifi)
+	RED.nodes.registerType('Bluetooth', Bluetooth)
 	RED.nodes.registerType('Image', Image)
+
 }
