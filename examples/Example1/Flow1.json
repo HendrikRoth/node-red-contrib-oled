@@ -718,7 +718,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "{\"image\":\"/home/waterbrain/yahabommlogo-2-128x20.png\",\"x\":0,\"y\":25,\"clear\":true}",
+                "to": "{\"image\":\"yahabommlogo-2-128x20.png\",\"x\":0,\"y\":25,\"clear\":true}",
                 "tot": "json"
             }
         ],
