@@ -19,15 +19,18 @@
         "out": [],
         "env": [],
         "meta": {
+            "module": "oledstatus",
+            "version": "0.0.3",
             "author": "Antonio Maza waterbrain@pelaire.com",
+            "desc": "Display raspi status in i2c Oled 128x64",
             "keywords": "oled, i2c",
-            "license": "Apache-2.0"
+            "license": "MIT"
         },
         "color": "#3FADB5",
         "inputLabels": [
             "msg imput"
         ],
-        "icon": "node-red-contrib-blynk-ws/image.png"
+        "icon": "node-red/cog.svg"
     },
     {
         "id": "167d8c0db2fbf5cc",
@@ -1012,7 +1015,7 @@
     {
         "id": "bf0b31ad452185bc",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "oled samples",
         "disabled": false,
         "info": "",
         "env": []
@@ -2482,7 +2485,7 @@
         "id": "47e98459d676c813",
         "type": "subflow:1fbc83566a03a07b",
         "z": "bf0b31ad452185bc",
-        "name": "",
+        "name": "raspi status",
         "x": 330,
         "y": 120,
         "wires": []
