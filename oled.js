@@ -38,6 +38,15 @@ exec('sudo systemctl status RGB_Cooling_HAT | grep " Active: active (running)" |
         }
     });
 
+exec('sudo ps -ef | grep temp_control  | wc -l',
+    function (error, stdout, stderr) {
+        //console.log('stdout: ' + stdout);
+        //console.log('stderr: ' + stderr);
+        if (stdout != 1) {
+             console.error('RGB_Cooling_HAT running. node-red-contrib-oled may be working wrong. please stop it.');
+        }
+    });
+
 module.exports = function(RED) {
 	var displays = {}
 	
