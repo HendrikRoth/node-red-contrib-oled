@@ -4,13 +4,19 @@
   "description": "Node-Red node for controlling OLED displays",
   "main": "index.js",
   "scripts": {},
+  "readmeFilename": "README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HendrikRoth/node-red-contrib-oled.git"
   },
   "keywords": [
-    "node-red"
+    "node-red",
+    "oled",
+    "ADS1x15 "
   ],
+  "engines": {
+    "node": ">=12"
+  },
   "author": "Hendrik Roth <hi@hendrikroth.com>",
   "license": "MIT",
   "bugs": {
@@ -26,8 +32,15 @@
     "time-events-manager": "^0.1.1"
   },
   "node-red": {
+    "version": ">=1.0.0",
     "nodes": {
       "oled": "oled.js"
     }
-  }
+  },
+  "maintainers": [
+    {
+      "name": "waterbrain",
+      "email": "waterbrain@pelaire.com"
+    }
+    ]
 }
