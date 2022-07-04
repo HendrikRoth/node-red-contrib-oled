@@ -43,7 +43,6 @@
       "email": "waterbrain@pelaire.com"
     }
     ],
-  "repository":"https://github.com/HendrikRoth/node-red-contrib-oled.git",
   "publishConfig": {
     "registry": "https//npm.pkg.gitub.com"
   }
