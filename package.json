@@ -7,7 +7,7 @@
   "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HendrikRoth/node-red-contrib-oled.git"
+    "url": "https://github.com/HendrikRoth/node-red-contrib-oled.git"
   },
   "keywords": [
     "node-red",
