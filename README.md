@@ -1,6 +1,6 @@
 node-red-contrib-oled
 =====================
-![Image text](https://github.com/HendrikRoth/node-red-contrib-oled/blob/master/screen%20example.png)
+![Image text](https://raw.githubusercontent.com/HendrikRoth/node-red-contrib-oled/master/screen%20example.png)
 
 
 
