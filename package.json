@@ -1,14 +1,10 @@
 {
-  "name": "@hendrikroth/node-red-contrib-oled",
+  "name": "node-red-contrib-oled",
   "version": "0.2.4",
   "description": "Node-Red node for controlling OLED displays",
   "main": "index.js",
   "scripts": {},
   "readmeFilename": "README.md",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/HendrikRoth/node-red-contrib-oled.git"
-  },
   "keywords": [
     "node-red",
     "oled",
@@ -42,8 +38,5 @@
       "name": "waterbrain",
       "email": "waterbrain@pelaire.com"
     }
-    ],
-  "publishConfig": {
-    "registry": "https//npm.pkg.gitub.com"
-  }
+    ]
 }
