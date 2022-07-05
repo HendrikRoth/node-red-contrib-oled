@@ -1,6 +1,6 @@
 {
   "name": "red-contrib-oled",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Node-Red node for controlling OLED displays",
   "main": "index.js",
   "scripts": {},
