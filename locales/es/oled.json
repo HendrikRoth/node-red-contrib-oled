@@ -1,0 +1,71 @@
+{
+    "oled" : {
+        "config" : {
+            "name" : "Nombre",
+            "address" : "Dirección Bus",
+            "width" : "Ancho",
+            "height": "ALto",
+            "fanAddress" : "Dirección Bus ventilador"
+        },
+        "battery" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "clear" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "dimmed" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "fillRectangle" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "fan" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "invertion" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "image" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "line" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "pixel" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "scroll" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "string" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "turn-on" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "turn-off" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "wifi" : {
+            "display": "Display",
+            "name" : "Nombre"
+        },
+        "clock" : {
+            "display": "Display",
+            "name" : "Nombre"
+        }
+    }
+}

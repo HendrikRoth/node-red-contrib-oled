@@ -1,0 +1,342 @@
+[
+    {
+        "id": "8a8d2aa562fbdbf5",
+        "type": "subflow",
+        "name": "reloj",
+        "info": "# Cloc simulation with nodered-contrib-oled\n",
+        "category": "",
+        "in": [
+            {
+                "x": 20,
+                "y": 240,
+                "wires": [
+                    {
+                        "id": "4b63bf9f2db38d28"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {
+            "module": "Clock",
+            "version": "0.0.0",
+            "author": "Antonio maza <waterbrain@pelaire.com",
+            "desc": "Clock simulation",
+            "keywords": "node-contrib-oled",
+            "license": "Apache-2.0"
+        },
+        "color": "#3FADB5",
+        "icon": "font-awesome/fa-history",
+        "status": {
+            "x": 980,
+            "y": 200,
+            "wires": [
+                {
+                    "id": "a9bfb27a6b47d245",
+                    "port": 3
+                }
+            ]
+        }
+    },
+    {
+        "id": "a9bfb27a6b47d245",
+        "type": "function",
+        "z": "8a8d2aa562fbdbf5",
+        "name": "function 3",
+        "func": "const oledsb = [\"OledZero.png\", \"OledOne.png\", \"OledTwo.png\", \"OledThree.png\", \"OledFour.png\", \"OledFive.png\", \"OledSix.png\", \"OledSeven.png\", \"OledEight.png\", \"OledNine.png\", \"OledTwopoints.png\"];\nconst oledsw = [\"OledZeroWhite.png\", \"OledOneWhite.png\", \"OledTwoWhite.png\", \"OledThreeWhite.png\", \"OledFourWhite.png\", \"OledFiveWhite.png\", \"OledSixWhite.png\", \"OledSevenWhite.png\", \"OledEightWhite.png\", \"OledNineWhite.png\", \"OledTwopointsWhite.png\"];\nconst shift = 8;\nconst locale = env.get(\"LANGUAGE\").substring(0, env.get(\"LANGUAGE\").indexOf(\".\")).replace(\"_\", \"-\");\nvar localHour = new Date().toLocaleTimeString();\nvar localDate;\nvar date = new Date();\n/*dateStyle\tLegal values:\n\"full\"\n\"long\"\n\"medium\"\n\"short\" */\nvar formatedDate;\nif (localHour.length === 7) { localHour = \"0\" + localHour }\nvar hour = parseInt(localHour.substring(0, 2));\nvar min = parseInt(localHour.substring(3, 5));\nvar sec = parseInt(localHour.substring(6, 8));\nvar hour1 = (hour < 10 ? 0 : parseInt(hour.toString().substring(0, 1)));\nvar hour2 = (hour < 10 ? parseInt(hour.toString().substring(0, 1)) : parseInt(hour.toString().substring(1, 2)));\nvar min1 = (min < 10 ? 0 : parseInt(min.toString().substring(0, 1)));\nvar min2 = (min < 10 ? parseInt(min.toString().substring(0, 1)) : parseInt(min.toString().substring(1, 2)));\nvar sec1 = (sec < 10 ? 0 : parseInt(sec.toString().substring(0, 1)));\nvar sec2 = (sec < 10 ? parseInt(sec.toString().substring(0, 1)) : parseInt(sec.toString().substring(1, 2)));\nvar oldHour1 = flow.get(\"oldHour1\")\nvar oldHour2 = flow.get(\"oldHour2\")\nvar oldMin1 = flow.get(\"oldMin1\")\nvar oldMin2 = flow.get(\"oldMin2\")\nvar oldSec1 = flow.get(\"oldSec1\")\nvar oldSec2 = flow.get(\"oldSec2\")\nvar oldHour = flow.get(\"oldHour\")\n\nvar oldFormatDate = flow.get(\"oldFormatDate\");\n//node.warn(\" oldHour: \" + oldHour + \" hour: \" + hour + \" cerouno: \" + flow.get(\"zerouno\"));\nvar datePosition = flow.get(\"datePosition\") || 1;\n\nvar entrada = msg.payload;\nvar statusMsg;\nvar correccion = 0;\nvar delay;\nstatusMsg = { fill: \"red\", shape: \"dot\", text: localHour };\n//node.warn(\"cerouno\" + flow.get(\"zerouno\"));\nif (typeof oldHour == 'undefined' || oldHour < hour) {\n    node.warn(\" oldHour: \" + oldHour + \" hour: \" + hour);\n    flow.set(\"oldHour\", hour)\n    formatedDate = new Intl.DateTimeFormat(locale, { dateStyle: 'long' }).format(date)\n    flow.set(\"oldFormatDate\", formatedDate);\n    //node.warn(\"leng date \" + formatedDate.length * 7 );\n    if (parseInt(((128 - formatedDate.length * 7) / 2)) > 0) {\n        datePosition = parseInt(((128 - formatedDate.length * 7) / 2))\n        flow.set(\"datePosition\", datePosition)\n    } else {\n        datePosition = 1\n        flow.set(\"datePosition\", datePosition)\n    }\n} \nif (oldFormatDate != formatedDate) {\n    localDate = formatedDate;\n    flow.set(\"oldFormatDate\" , formatedDate);\n} \nif (flow.get(\"zerouno\") === 0 || 0){\n    flow.set(\"zerouno\", 1);\n    //node.warn(\"cero\");\n    msg.fill = \"green\";\n    delay = \"no\";\n    msg.delay = 1;\n    msg.payload = { image: oledsb[10], x: shift + 31, y: 20 }\n    node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: localDate } } ,{ payload: statusMsg }]);\n    msg.payload = { image: oledsb[10], x: shift + 66, y: 20 }\n    node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: localDate } }, { payload: statusMsg }]);\n/*\n    msg.payload = { image: oledsb[hour1], x: shift + 1, y: 20 }\n    node.send([msg,{ payload: delay }, { payload: statusMsg }]);\n    msg.payload = { image: oledsb[hour2], x: shift + 15, y: 20 }\n    node.send([msg, { payload: delay }, { payload: statusMsg }]);\n \n    msg.payload = { image: oledsb[min1], x: shift + 35, y: 20 }\n    node.send([msg, { payload: delay }, { payload: statusMsg }]);\n    msg.payload = { image: oledsb[min2], x: shift + 50, y: 20 }\n    node.send([msg, { payload: delay }, { payload: statusMsg }]);\n    \n    msg.payload = { image: oledsb[sec1], x: shift + 70, y: 20 }\n    node.send([msg, { payload: delay }, { payload: statusMsg }]);\n    msg.payload = { image: oledsb[sec2], x: shift + 85, y: 20 } */\n    \n    delay = \"yes\";\n    node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: localDate } }, { payload: statusMsg }]);\n} else {\n    flow.set(\"zerouno\", 0);\n    //node.warn(\"uno\");\n    msg.fill = \"reed\"\n    delay = \"no\";\n    msg.delay = 1;\n    if (oldSec2 != sec2) {\n        msg.payload = { image: \"OledClear.png\", x: shift + 86, y: 20 }\n        node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: \"\" }}, { payload: statusMsg }]);\n    }\n    if (oldSec1 != sec1) {\n        msg.payload = { image: \"OledClear.png\", x: shift + 70, y: 20 }\n        node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: \"\" } }, { payload: statusMsg }]);\n    }\n    if (oldMin2 != min2) {\n        msg.payload = { image: \"OledClear.png\", x: shift + 51, y: 20 }\n        node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: \"\" } }, { payload: statusMsg }]);\n    }\n    if (oldMin1 != min1) {\n        msg.payload = { image: \"OledClear.png\", x: shift + 35, y: 20 }\n        node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: \"\" } }, { payload: statusMsg }]);\n    }\n    if (oldHour2 != hour2) {\n        msg.payload = { image: \"OledClear.png\", x: shift + 16, y: 20 }\n        node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: localDate } }, { payload: statusMsg }]);\n    }\n    if (oldHour1 != hour1) {\n        msg.payload = { image: \"OledClear.png\", x: shift , y: 20 }\n        node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: localDate } }, { payload: statusMsg }]);\n    }\n    \n    \n   \n    if  (oldHour1 != hour1) {\n        flow.set(\"oldHour1\", hour1)\n        flow.set(\"oldHour\", hour)\n        msg.payload = { image: oledsw[hour1], x: shift , y: 20 }\n        node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: localDate } }, { payload: statusMsg }]);\n    }\n    if (oldHour2 != hour2) {\n        flow.set(\"oldHour2\", hour2)\n        flow.set(\"oldHour\", hour)\n        msg.payload = { image: oledsw[hour2], x: shift + 16, y: 20 }\n        node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: localDate } }, { payload: statusMsg }]);\n    }\n    if (oldMin1 != min1) {\n        flow.set(\"oldMin1\", min1)\n        msg.payload = { image: oledsw[min1], x: shift + 35, y: 20 }\n        node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: \"\" } }, { payload: statusMsg }]);\n    }\n    if (oldMin2 != min2) {\n        flow.set(\"oldMin2\", min2)\n        msg.payload = { image: oledsw[min2], x: shift + 51, y: 20 }\n        node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: \"\" } }, { payload: statusMsg }]);\n    }\n    if (oldSec1 != sec1) {\n        flow.set(\"oldSec1\", sec1)\n        msg.payload = { image: oledsw[sec1], x: shift + 70, y: 20 }\n        node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: \"\" } }, { payload: statusMsg }]);\n        //node.warn(new Intl.DateTimeFormat('en-GB', { dateStyle: 'full'}).format(date));\n        //node.warn(locale);\n        //node.warn(new Intl.DateTimeFormat(locale, { dateStyle: 'full' }).format(date));\n    \n    }\n    if (oldSec2 != sec2) {\n        flow.set(\"oldSec2\", sec2)\n        msg.payload = { image: oledsw[sec2], x: shift + 86, y: 20 }\n        node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: \"\" } }, { payload: statusMsg }]);\n    }\n    msg.payload = { image: oledsw[10], x: shift + 31, y: 20 }\n    node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: \"\" } }, { payload: statusMsg }]);\n    msg.payload = { image: oledsw[10], x: shift + 66, y: 20 }\n    delay = \"yes\";\n    node.send([msg, { payload: delay }, { payload: { size: 1, x: datePosition, y: 1, text: \"\" } }, { payload: statusMsg }]);\n   /* oldHour1 = hour1;\n    oldHour2 = hour2;\n    oldMin1 = min1;\n    oldMin2 = min2;\n    oldSec1 = sec1;\n    oldSec2 = sec2;\n    oldHour = hour; */\n}\n\n//node.warn(\" oldHour: \" + oldHour + \" hour: \" + hour);",
+        "outputs": 4,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 60,
+        "wires": [
+            [
+                "8d65aa26ca962008"
+            ],
+            [
+                "df08159446f90ab8"
+            ],
+            [
+                "89986f4b2d71041e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8d65aa26ca962008",
+        "type": "Image",
+        "z": "8a8d2aa562fbdbf5",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 750,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "4b63bf9f2db38d28",
+        "type": "change",
+        "z": "8a8d2aa562fbdbf5",
+        "name": "rectangulo",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"x\":0,\"y\":0,\"w\":128,\"h\":64,\"color\":0}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "ebf3639b90022072",
+                "1ee08d082008fc59"
+            ]
+        ]
+    },
+    {
+        "id": "ebf3639b90022072",
+        "type": "FillRectangle",
+        "z": "8a8d2aa562fbdbf5",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 370,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "1e4c59eb68ba10e4",
+        "type": "delay",
+        "z": "8a8d2aa562fbdbf5",
+        "name": "delay",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 130,
+        "y": 340,
+        "wires": [
+            [
+                "a9bfb27a6b47d245"
+            ]
+        ]
+    },
+    {
+        "id": "ef9ab7decd74b688",
+        "type": "delay",
+        "z": "8a8d2aa562fbdbf5",
+        "name": "delay",
+        "pauseType": "delay",
+        "timeout": "250",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 490,
+        "y": 220,
+        "wires": [
+            [
+                "a9bfb27a6b47d245"
+            ]
+        ]
+    },
+    {
+        "id": "df08159446f90ab8",
+        "type": "switch",
+        "z": "8a8d2aa562fbdbf5",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "yes",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 160,
+        "wires": [
+            [
+                "ef9ab7decd74b688"
+            ]
+        ]
+    },
+    {
+        "id": "9c7d16881bc44cbd",
+        "type": "change",
+        "z": "8a8d2aa562fbdbf5",
+        "name": "rectangulo",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"x\":0,\"y\":0,\"w\":128,\"h\":64,\"color\":0}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 340,
+        "wires": [
+            [
+                "ebf3639b90022072"
+            ]
+        ]
+    },
+    {
+        "id": "a90de0ecc15a7fd7",
+        "type": "String",
+        "z": "8a8d2aa562fbdbf5",
+        "name": "",
+        "display": "9a288fe6eaa83734",
+        "x": 810,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "50119f025e06acbc",
+        "type": "debug",
+        "z": "8a8d2aa562fbdbf5",
+        "name": "debug 13",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "89986f4b2d71041e",
+        "type": "switch",
+        "z": "8a8d2aa562fbdbf5",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "\"\"",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 650,
+        "y": 160,
+        "wires": [
+            [
+                "a90de0ecc15a7fd7"
+            ]
+        ]
+    },
+    {
+        "id": "1ee08d082008fc59",
+        "type": "function",
+        "z": "8a8d2aa562fbdbf5",
+        "name": "startup",
+        "func": "flow.set(\"oldHour1\", -1);\nflow.set(\"oldHour\", -1);     \nflow.set(\"oldHour2\", -1);\nflow.set(\"oldMin1\", -1);\nflow.set(\"oldMin2\", -1);\nflow.set(\"oldSec1\", -1);\nflow.set(\"oldSec2\", -1);\nflow.set(\"datePosition\", 1);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 140,
+        "y": 240,
+        "wires": [
+            [
+                "1e4c59eb68ba10e4"
+            ]
+        ]
+    },
+    {
+        "id": "9a288fe6eaa83734",
+        "type": "oled-config",
+        "name": "oled",
+        "width": "128",
+        "height": "64",
+        "address": "60"
+    },
+    {
+        "id": "dbfdd28e.d60f",
+        "type": "tab",
+        "label": "Clock sample",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "dba7f72fb4129a93",
+        "type": "subflow:8a8d2aa562fbdbf5",
+        "z": "dbfdd28e.d60f",
+        "name": "",
+        "x": 370,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "00a8cb946526f7cd",
+        "type": "inject",
+        "z": "dbfdd28e.d60f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 80,
+        "wires": [
+            [
+                "dba7f72fb4129a93"
+            ]
+        ]
+    }
+]

@@ -79,7 +79,7 @@ module.exports = function(RED) {
 		self.config = {
 			width: parseInt(config.width),
 			height: parseInt(config.height),
-			address: parseInt('0x'+config.address)
+			address: config.address.includes('0x') ? parseInt('0x' + config.address) : parseInt(config.address)
 		}
 		displays[self.id] = new Oled(i2cBus, self.config)
 		check(displays[self.id], { clear: true })

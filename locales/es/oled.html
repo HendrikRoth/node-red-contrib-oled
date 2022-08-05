@@ -1,0 +1,137 @@
+<script type="text/html" data-help-name="oled-config">
+    <p>Un Node-RED para manejo de  i2c Oleds y ventiladores, o para reconocerlos.</p>
+    <h3>Salidas</h3>
+    <h3>Detalles</h3>
+    <p>Este nodo proporciona un widget de un solo botón en el dashboard.</p>
+</script>
+
+<script type="text/x-red" data-help-name="Battery">
+	<p>Dibuja un indicador de bateria (ancho:19, alto:9)</p>
+	<p>El paylod debe contener las coordenadas del píxel de inicio y el porcentaje de carga de la batería</p>
+	<p>los niveles de carga son <10,10-40,40-70,70-100</p>
+	<p>abscisa: <b>msg.payload.x</b></p>
+	<p>ordenada: <b>msg.payload.y</b></p>
+ 	<p>porcentaje: <b>msg.payload.p</b></p>
+	<p>Ejemplo: <b>{"x":1,"y":1,"p":25}</b></p>
+</script>
+
+<script type="text/x-red" data-help-name="Bluetooth">
+	<p>Dibuja el logo de Bluetooth (ancho:8, alto:10)</p>
+	<p>El <b>paylod</b> debe contener las coordenadas de los píxeles de inicio del logo Bluetooth</p>
+	<p>abscisa: <b>msg.payload.x</b></p>
+	<p>ordenada: <b>msg.payload.y</b></p>
+	<p>Ejemplo: <b>{"x":1,"y":1}</b></p>
+</script>
+
+<script type="text/x-red" data-help-name="Clear">
+    <p>Limpia el display Oled</p>
+    <p>El <b>paylod</b> debe establecerse en <b>true</b> para habilitar el nodo</p>
+	<p>Si los píxeles están invertidos, establece todos los píxeles en 1</p>
+</script>
+
+<script type="text/x-red" data-help-name="Clock">
+    <p>Dibuja un reloj digital</p>
+    <p>El <b>paylod</b> debe establecerse en <b>true</b> para habilitar el nodo</p>
+	<p>o establecerse a <b>false</b> para deshabilitarlo</p>
+</script>
+
+<script type="text/x-red" data-help-name="Dimmed">
+    	<p>Cambia el contraste de la pantalla Oled</p>
+    	<p>El <b>paylod</b> debe establecerse en <b>true</b> para reducir el contraste y a  <b>false</b> para volver a ser brillante</p>
+</script>
+
+<script type="text/x-red" data-help-name="FillRectangle">
+	<p>Dibuja un rectangulo rellenado </p>
+	<p>El <b>paylod</b> debe contener las coordenadas del pixel, el ancho, la altura y el color</p>
+	<p>Si establecemos el color a <b>0</b> el rectangulo se mostrara apagado</p>
+	<p>abscisa: <b>msg.payload.x</b></p>
+	<p>ordenada: <b>msg.payload.y</b></p>
+ 	<p>ancho: <b>msg.payload.w</b></p>
+ 	<p>alto: <b>msg.payload.h</b></p>
+  	<p>color: <b>msg.payload.color</b></p>
+	<p>Ejemplo: <b>{"x":1,"y":1,"w":10,"h":20,"color":1}</b></p>
+</script>
+
+<script type="text/x-red" data-help-name="Invertion">
+    	<p>Invierte el color de todos los pixeles</p>
+    	<p>El <b>paylod</b> debe establecerse a <b>true</b> para invertir <b>false</b> para revertir</p>
+</script>
+
+<script type="text/x-red" data-help-name="Image">
+	<p>Dibuja una imagen png.</p>
+	<p>El <b>paylod</b> debe contener la ruta al fichero png, sus coordenadas, y si debe limpia el display antes de dibujalo.</p>
+	<p>image: <b>msg.payload.image</b></p>
+	<p>abscisa: <b>msg.payload.x</b></p>
+	<p>ordenada: <b>msg.payload.y</b></p>
+ 	<p>clear: <b>msg.payload.clear</b></p>
+	<p>animado: <b>msg.payload.animated</b></p>
+	<p>reset: <b>msg.payload.reset</b></p>
+	<p>Ejemplo: <b>{"image": "OledImage.png", "x":1, "y":1 , "clear":true , "animated":true}</b></p>
+	<p><los parametros <b>x</b>, <b>y</b>, <b>clear</b>, <b>animated</b> y <b>reset</b> son opcionales.</p>
+</script>
+
+<script type="text/x-red" data-help-name="Line">
+	<p><dibuja una linea</p>
+	<p>El <b>paylod</b> debe contener las coordenadas de principio y fin, y el color</p>
+	<p>Sí el color se establece a  <b>0</b> la linea se dibuja apagada</p>
+	<p>abscisa principio: <b>msg.payload.x0</b></p>
+	<p>ordenada principio: <b>msg.payload.y0</b></p>
+ 	<p>abscisa final: <b>msg.payload.x1</b></p>
+ 	<p>ordenada final: <b>msg.payload.y1</b></p>
+  	<p>color: <b>msg.payload.color</b></p>
+	<p>Ejemplo: <b>{"x0":1,"y0":1,"x1":30,"y1":30,"color":1}</b></p>
+</script>
+
+<script type="text/x-red" data-help-name="Pixel">
+	<p>Dibuja pixel(s) especificos</p>
+	<p>El <b>paylod</b> debe contener las coordenadas de los pixel(s) y el color</p>
+	<p>cada pixel se configura como  <b>[abscisa,ordenada,color]</b></p>
+	<p>Sí el color se establece a <b>0</b> el pixel se apagará</p>
+	<p>Ejemplo:</p>
+	<p>Un pixel:<b>msg.payload=[1,1,1]</b></p>
+	<p>Varios pixels: <b>msg.payload=[[1,1,1],[24,32,0],...]</b></p>
+</script>
+
+<script type="text/x-red" data-help-name="Scroll">
+	<p>Desplaza el display</p>
+	<p>El <b>paylod</b> debe contener la dirección de comienzo y fin.</p>
+	<p>dirección: <b>msg.payload.direction</b></p>
+	<p>Comenzar: <b>msg.payload.start</b></p>
+ 	<p>Finalizar: <b>msg.payload.stop</b></p>
+	<p>Ejemplo: <b>{"direction":"left","start":0,"stop":128}</b></p>
+	<p>Si se quiere deshabilitar, se debe basar el valor boolean <b>false</b> como parametro.</p> 
+	<p>Los posibles valores para dirección son <b>"left"</b> <b>"right"</b>  <b>"left_diagonal"</b>  <b>"right_diagonal"</b>  .</p> 
+</script>
+
+<script type="text/x-red" data-help-name="String">
+    <p>Escribe un texto con un  font 5x7</p>
+    <p>El <b>paylod</b> debe contener el tamaño font (multiplos del tamaño original 5x7), las coordenadas de comienzo del texto, y el texto</p>
+	<p>tamaño: <b>msg.payload.size</b></p>
+	<p>abscisa: <b>msg.payload.x</b></p>
+	<p>ordenada: <b>msg.payload.y</b></p>
+    <p>texto: <b>msg.payload.text</b></p>
+	<p>Ejemplo: <b>{"size":2,"x":1,"y":1,"text":"Oled"}</b></p>
+</script>
+
+<script type="text/x-red" data-help-name="Turn-on">
+    <p>Enciende el display Oled</p>
+    <p>El <b>paylod</b> debe establecerse a <b>true</b> para habilitar el nodo</p>
+	<p>Se restauran el contenido anterior del display</p>
+</script>
+
+
+<script type="text/x-red" data-help-name="Turn-off">
+    <p>Apaga el display Oled</p>
+    <p><p>El <b>paylod</b> debe establecerse a <b>true</b> para habilitar el nodo</p>
+	<p>Se guarda el contenido anterior del display</p>
+</script>
+
+<script type="text/x-red" data-help-name="Wifi">
+	<p>Dibuja el simbolo de WiFi (w:19, h:9)</p>
+	<p>El <b>paylod</b> debe contener las coordenadas del comienzo y la potencia de recepción</p>
+	<p>Los margenes de recepción son <10,10-40,40-70,70-100</p>
+	<p>abscisa: <b>msg.payload.x</b></p>
+	<p>ordenada: <b>msg.payload.y</b></p>
+ 	<p>percentage: <b>msg.payload.p</b></p>
+	<p>Ejemplo: <b>{"x":1,"y":1,"p":25}</b></p>
+</script>

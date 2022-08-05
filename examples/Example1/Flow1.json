@@ -246,13 +246,13 @@
         "id": "5168c678562eaae2",
         "type": "change",
         "z": "1fbc83566a03a07b",
-        "name": "getCPUTemp",
+        "name": "getEthaddress",
         "rules": [
             {
                 "t": "set",
                 "p": "conexion",
                 "pt": "flow",
-                "to": "\"Eth0 \" & payload.networkInterfaces.eth0.address",
+                "to": "\"Eth0 \" & $substringBefore($replace($replace($replace($string(payload.networkInterfaces.eth0.address), '[', ''), '\"', ''), ']', ''), ',')",
                 "tot": "jsonata"
             }
         ],
@@ -1762,7 +1762,7 @@
         "name": "",
         "display": "9a288fe6eaa83734",
         "x": 1230,
-        "y": 1600,
+        "y": 1560,
         "wires": []
     },
     {
@@ -2756,11 +2756,89 @@
         ]
     },
     {
+        "id": "24db6a17032e72ab",
+        "type": "i2c scan",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "busno": "1",
+        "x": 1000,
+        "y": 100,
+        "wires": [
+            [
+                "8944fe1848d9fb9a"
+            ],
+            [
+                "2cb52213899495b9"
+            ]
+        ]
+    },
+    {
+        "id": "fb8ba2afb2031308",
+        "type": "inject",
+        "z": "bf0b31ad452185bc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 800,
+        "y": 100,
+        "wires": [
+            [
+                "24db6a17032e72ab"
+            ]
+        ]
+    },
+    {
+        "id": "8944fe1848d9fb9a",
+        "type": "debug",
+        "z": "bf0b31ad452185bc",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "2cb52213899495b9",
+        "type": "debug",
+        "z": "bf0b31ad452185bc",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1200,
+        "y": 140,
+        "wires": []
+    },
+    {
         "id": "9a288fe6eaa83734",
         "type": "oled-config",
         "name": "oled",
         "width": "128",
         "height": "64",
-        "address": "0x3D"
+        "address": "0x3c"
     }
 ]
