@@ -1,148 +1,138 @@
 <script type="text/html" data-help-name="oled-config">
-    <p>A Node-RED to manage i2c Oleds and fans, or to recognize.</p>
-    <h3>Outputs</h3>
-    <h3>Details</h3>
-    <p>This node provides a single button widget in the dashboard.</p>
+    <p>Ein Node-RED zur Verwaltung von i2c Oleds und Lüftern, oder zur Erkennung von.</p>
+    <h3>Ausgänge</h3>
+    <h3>Einzelheiten</h3>
+    <p>Dieser Knoten bietet ein einzelnes Schaltflächen-Widget im Dashboard.</p>
 </script>
 
 <script type="text/x-red" data-help-name="Battery">
-	<p>Draws a battery display (w:19, h:9)</p>
-	<p><b>Payload</b> should contain coordinates of the start pixels and the battery charge percentage</p>
-	<p>the treasholds are <10,10-40,40-70,70-100</p>
-	<p>abscissa: <b>msg.payload.x</b></p>
-	<p>ordinate: <b>msg.payload.y</b></p>
- 	<p>percentage: <b>msg.payload.p</b></p>
-	<p>Example: <b>{"x":1,"y":1,"p":25}</b></p>
+	<p>Zeichnet eine Batterieanzeige (w:19, h:9)</p>
+	<p><b>Payload</b> sollte die Koordinaten der Startpixel und den Prozentsatz der Batterieladung enthalten</p>
+	<p>die Treasholds sind <10,10-40,40-70,70-100</p>
+	<p>Abszisse: <b>msg.payload.x</b></p>
+	<p>Ordinate: <b>msg.payload.y</b></p>
+ 	<p>Prozent: <b>msg.payload.p</b></p>
+	<p>Beispiel: <b>{"x":1,"y":1,"p":25}</b></p>
 </script>
 
 <script type="text/x-red" data-help-name="Bluetooth">
-	<p>Draws a Bluetooth logo (w:8, h:10)</p>
-	<p><b>Payload</b> should contain coordinates of the start Bluetooth logo</p>
-	<p>abscissa: <b>msg.payload.x</b></p>
-	<p>ordinate: <b>msg.payload.y</b></p>
-	<p>Example: <b>{"x":1,"y":1}</b></p>
+	<p>Zeichnet ein Bluetooth-Logo (w:8, h:10)</p>
+	<p><b>Payload</b> sollte die Koordinaten des Start-Bluetooth-Logos enthalten</p>
+	<p>Abszisse: <b>msg.payload.x</b></p>
+	<p>Ordinate: <b>msg.payload.y</b></p>
+	<p>Beispiel: <b>{"x":1,"y":1}</b></p>
 </script>
 
 <script type="text/x-red" data-help-name="Clear">
-    	<p>Clears the Oled display</p>
-    	<p><b>Payload</b> should be set to <b>true</b> to enable the node</p>
-	<p>If pixels are inverted, set all pixels to 1</p>
+    <p>Löscht das Oled-Display</p>
+    <p><b>Payload</b> sollte eingestellt werden auf <b>true</b> um den Knoten zu aktivieren</p>
+	<p>Wenn Pixel invertiert sind, alle Pixel auf 1 setzen</p>
 </script>
 
 <script type="text/x-red" data-help-name="Clock">
-    	<p>Draws a clock</p>
-    	<p><b>Payload</b> should be set to <b>true</b> to enable the node</p>
-		<p>or set to <b>false</b> to disble</p>
+    <p>Zeichnet eine Uhr</p>
+    <p><b>Payload</b> Der Status sollte gesetzt werden auf <b>on</b> um den Knoten zu aktivieren</p>
+	<p>oder eingestellt auf <b>off</b> zum Diskutieren</p>
+	<p>Beispiel: <b>{"status": "on"}</b></p>
 </script>
 
 <script type="text/x-red" data-help-name="Dimmed">
-    	<p>Changes contrast of the Oled display</p>
-    	<p><b>Payload</b> should be set to <b>true</b> to reduce contrast and to <b>false</b> to turn back to bright</p>
+    <p>Ändert den Kontrast des Oled-Displays</p>
+    <p><b>Payload</b> sollte eingestellt werden auf <b>true</b> um den Kontrast zu verringern und um <b>false</b> wieder hell zu werden</p>
 </script>
 
 <script type="text/x-red" data-help-name="FillRectangle">
-	<p>Draws a filled rectangle </p>
-	<p><b>Payload</b> should contain coordinates of the start pixel, the width, the height and the color</p>
-	<p>if color is set to <b>0</b> the rectangle will turn off</p>
-	<p>abscissa: <b>msg.payload.x</b></p>
-	<p>ordinate: <b>msg.payload.y</b></p>
- 	<p>width: <b>msg.payload.w</b></p>
- 	<p>height: <b>msg.payload.h</b></p>
-  	<p>color: <b>msg.payload.color</b></p>
-	<p>Example: <b>{"x":1,"y":1,"w":10,"h":20,"color":1}</b></p>
-</script>
-
-<script type='text/x-red' data-template-name='Invertion'>
-	<div class='form-row'>
-		<label for='node-config-input-display'><i class='fa'></i> Display</label>
-		<input type='text' id='node-input-display'/>
-	</div>
-	<div class='form-row'>
-		<label for='node-config-input-name'><i class='fa fa-tag'></i> Name</label>
-		<input type='text' id='node-input-name'/>
-	</div>
+	<p>Zeichnet ein gefülltes Rechteck </p>
+	<p><b>Payload</b> sollte die Koordinaten des Startpixels, die Breite, die Höhe und die Farbe enthalten</p>
+	<p>wenn die Farbe auf <b>0</b> the rectangle will turn off</p>
+	<p>Abszisse: <b>msg.payload.x</b></p>
+	<p>Ordinate: <b>msg.payload.y</b></p>
+ 	<p>Breite: <b>msg.payload.w</b></p>
+ 	<p>Höhe: <b>msg.payload.h</b></p>
+  	<p>Farbe: <b>msg.payload.color</b></p>
+	<p>Beispiel: <b>{"x":1,"y":1,"w":10,"h":20,"color":1}</b></p>
 </script>
 
 <script type="text/x-red" data-help-name="Invertion">
-    	<p>Inverts all pixels color values</p>
-    	<p><b>Payload</b> should be set to <b>true</b> to invert and to <b>false</b> to reverse</p>
+    <p>Invertiert alle Pixel-Farbwerte</p>
+    <p><b>Payload</b> sollte eingestellt werden auf <b>true</b> zum Invertieren und <b>fase</b> zum Umkehren</p>
 </script>
 
 <script type="text/x-red" data-help-name="Image">
-	<p>Draws a png image.</p>
-	<p><b>Payload</b> should contain the path to png file, its coordinates and clear display before displaying the image.</p>
-	<p>image: <b>msg.payload.image</b></p>
-	<p>abscissa: <b>msg.payload.x</b></p>
-	<p>ordinate: <b>msg.payload.y</b></p>
- 	<p>clear: <b>msg.payload.clear</b></p>
-	<p>animated: <b>msg.payload.animated</b></p>
-	<p>reset: <b>msg.payload.reset</b></p>
-	<p>Example: <b>{"image": "./OledImage.png", "x":1, "y":1 , "clear":true , "animated":true}</b></p>
-	<p>the <b>x</b>, <b>y</b>, <b>clear</b>, <b>animated</b> and <b>reset</b> parameters are optional.</p>
+	<p>Zeichnet ein png-Bild.</p>
+	<p><b>Payload</b> sollte den Pfad zur png-Datei, ihre Koordinaten und eine klare Anzeige enthalten, bevor das Bild angezeigt wird.</p>
+	<p>Bild: <b>msg.payload.image</b></p>
+	<p>Abszisse: <b>msg.payload.x</b></p>
+	<p>Ordinate: <b>msg.payload.y</b></p>
+ 	<p>frei: <b>msg.payload.clear</b></p>
+	<p>belebt: <b>msg.payload.animated</b></p>
+	<p>zurücksetzen: <b>msg.payload.reset</b></p>
+	<p>Beispiel: <b>{"image": "./OledImage.png", "x":1, "y":1 , "clear":true , "animated":true}</b></p>
+	<p>die  <b>x</b>, <b>y</b>, <b>clear</b>, <b>animated</b> und <b>reset</b> parameter sind optional.</p>
 </script>
 
 <script type="text/x-red" data-help-name="Line">
-	<p>Draws a line</p>
-	<p><b>Payload</b> should contain coordinates of the start pixel, the end pixel and the color</p>
-	<p>if color is set to <b>0</b> the line will turn off</p>
-	<p>start abscissa: <b>msg.payload.x0</b></p>
-	<p>start ordinate: <b>msg.payload.y0</b></p>
- 	<p>end abscissa: <b>msg.payload.x1</b></p>
- 	<p>end ordinate: <b>msg.payload.y1</b></p>
-  	<p>color: <b>msg.payload.color</b></p>
-	<p>Example: <b>{"x0":1,"y0":1,"x1":30,"y1":30,"color":1}</b></p>
+	<p>Zeichnet eine Linie</p>
+	<p><b>Payload</b> sollte die Koordinaten des Startpixels, des Endpixels und der Farbe enthalten</p>
+	<p>wenn die Farbe auf <b>0</b> schaltet sich die Leitung aus</p>
+	<p>Abszisse: <b>msg.payload.x0</b></p>
+	<p>Ordinate: <b>msg.payload.y0</b></p>
+ 	<p>Abszisse: <b>msg.payload.x1</b></p>
+ 	<p>Ordinate: <b>msg.payload.y1</b></p>
+  	<p>Farbe: <b>msg.payload.color</b></p>
+	<p>Beispiel: <b>{"x0":1,"y0":1,"x1":30,"y1":30,"color":1}</b></p>
 </script>
 
 <script type="text/x-red" data-help-name="Pixel">
-	<p>Displays specific pixel(s)</p>
-	<p><b>Payload</b> should contain coordinates of the pixel(s) and the color</p>
-	<p>each pixel must be define like <b>[abscissa,ordinate,color]</b></p>
-	<p>if color is set to <b>0</b> the pixel will turn off</p>
-	<p>Example:</p>
-	<p>One pixel:<b>msg.payload=[1,1,1]</b></p>
-	<p>Several pixels: <b>msg.payload=[[1,1,1],[24,32,0],...]</b></p>
+	<p>Zeigt bestimmte Pixel(s) an</p>
+	<p><b>Payload</b> sollte die Koordinaten des/der Pixel(s) und die Farbe enthalten</p>
+	<p>each pixel must be define like <b>[Abszisse,ordinate,color]</b></p>
+	<p>wenn die Farbe auf <b>0</b> schaltet sich das Pixel aus</p>
+	<p>Beispiel:</p>
+	<p>Ein Pixel: <b>msg.payload=[1,1,1]</b></p>
+	<p>Mehrere Pixel: <b>msg.payload=[[1,1,1],[24,32,0],...]</b></p>
 </script>
 
 <script type="text/x-red" data-help-name="Scroll">
-	<p>Scrolls the display</p>
-	<p><b>Payload</b> should contain direction, start position and stop position.</p>
-	<p>direction: <b>msg.payload.direction</b></p>
+	<p>Blättern in der Oled-Display</p>
+	<p><b>Payload</b> sollte die Richtung, die Startposition und die Endposition enthalten.</p>
+	<p>richtung: <b>msg.payload.direction</b></p>
 	<p>start: <b>msg.payload.start</b></p>
- 	<p>stop: <b>msg.payload.stop</b></p>
-	<p>Example: <b>{"direction":"left","start":0,"stop":128}</b></p>
-	<p>If you want to disable it, you must pass the boolean <b>false</b> value as parameter.</p> 
-	<p>Possible values for scroll direction are <b>"left"</b> <b>"right"</b>  <b>"left_diagonal"</b>  <b>"right_diagonal"</b>  .</p> 
+ 	<p>stopp: <b>msg.payload.stop</b></p>
+	<p>Beispiel: <b>{"direction":"left","start":0,"stop":128}</b></p>
+	<p>Wenn Sie es deaktivieren wollen, müssen Sie den booleschen <b>false</b> Wert als Parameter übergeben.</p> 
+	<p>Mögliche Werte für die Bildlaufrichtung sind <b>"left"</b> <b>"right"</b>  <b>"left_diagonal"</b>  <b>"right_diagonal"</b>  .</p> 
 </script>
 
 <script type="text/x-red" data-help-name="String">
-    <p>Writes the inlet string with multiple of font 5x7</p>
-    <p><b>Payload</b> should contain the font size (multiple of the original one in 5x7), coordinates where the string starts, and the text itself</p>
-	<p>size: <b>msg.payload.size</b></p>
-	<p>abscissa: <b>msg.payload.x</b></p>
-	<p>ordinate: <b>msg.payload.y</b></p>
+    <p>Schreibt den Eingangsstring mit dem Vielfachen der Schriftart 5x7</p>
+    <p><b>Payload</b> sollte die Schriftgröße (ein Vielfaches der Originalgröße in 5x7), die Koordinaten, an denen die Zeichenfolge beginnt, und den Text selbst enthalten</p>
+	<p>Größe: <b>msg.payload.size</b></p>
+	<p>Abszisse: <b>msg.payload.x</b></p>
+	<p>Ordinate: <b>msg.payload.y</b></p>
     <p>string: <b>msg.payload.text</b></p>
-	<p>Example: <b>{"size":2,"x":1,"y":1,"text":"Oled"}</b></p>
+	<p>Beispiel: <b>{"size":2,"x":1,"y":1,"text":"Oled"}</b></p>
 </script>
 
 <script type="text/x-red" data-help-name="Turn-on">
-    	<p>Turns on the Oled display</p>
-    	<p><b>Payload</b> should be set to <b>true</b> to enable the node</p>
-	<p>All previous display will be restore</p>
+    <p>Schaltet das Oled-Display ein</p>
+    <p><b>Payload</b> sollte eingestellt werden auf <b>true</b> um den Knoten zu aktivieren</p>
+	<p>Alle vorherigen Anzeigen werden wiederhergestellt.</p>
 </script>
 
 
 <script type="text/x-red" data-help-name="Turn-off">
-    	<p>Turns off the Oled display</p>
-    	<p><b>Payload</b> should be set to <b>true</b> to enable the node</p>
-	<p>All previous display will be store</p>
+    <p>Schaltet das Oled-Display aus</p>
+    <p><b>Payload</b> sollte eingestellt werden auf <b>true</b> um den Knoten zu aktivieren</p>
+	<p>Alle vorherigen Anzeigen werden gespeichert.</p>
 </script>
 
 <script type="text/x-red" data-help-name="Wifi">
-	<p>Draws a wifi display (w:19, h:9)</p>
-	<p><b>Payload</b> should contain coordinates of the start pixels and the wifi power reception</p>
-	<p>the treasholds are <10,10-40,40-70,70-100</p>
-	<p>abscissa: <b>msg.payload.x</b></p>
-	<p>ordinate: <b>msg.payload.y</b></p>
- 	<p>percentage: <b>msg.payload.p</b></p>
-	<p>Example: <b>{"x":1,"y":1,"p":25}</b></p>
+	<p>Zeichnet ein Wifi-Display (w:19, h:9)</p>
+	<p><b>Payload</b> sollte die Koordinaten der Startpixel und den Wifi-Empfang enthalten</p>
+	<p>die Treasholds sind <10,10-40,40-70,70-100</p>
+	<p>Abszisse: <b>msg.payload.x</b></p>
+	<p>Ordinate: <b>msg.payload.y</b></p>
+ 	<p>Prozent: <b>msg.payload.p</b></p>
+	<p>Beispiel: <b>{"x":1,"y":1,"p":25}</b></p>
 </script>

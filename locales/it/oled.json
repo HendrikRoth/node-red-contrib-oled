@@ -1,71 +1,72 @@
 {
     "oled" : {
         "config" : {
-            "name" : "Name",
-            "address" : "Bus Address",
-            "width" : "Width",
-            "height": "Height",
+            "name" : "Nome",
+            "address" : "Indirizzo dell'bus",
+            "width" : "Larghezza",
+            "height": "Alto",
             "fanAddress" : "Fan Bus Address"
         },
         "battery" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
         },
         "clear" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
+        },
+        "clock": {
+            "display": "Schermo",
+            "name": "Nome"
         },
         "dimmed" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
         },
         "fillRectangle" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
         },
         "fan" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
         },
         "invertion" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
         },
         "image" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
         },
         "line" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
         },
         "pixel" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
         },
         "scroll" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
         },
         "string" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
         },
         "turn-on" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
         },
         "turn-off" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
         },
         "wifi" : {
-            "display": "Display",
-            "name" : "Name"
-        },
-        "clock" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Schermo",
+            "name" : "Nome"
+        }
+        
         }
     }
-}

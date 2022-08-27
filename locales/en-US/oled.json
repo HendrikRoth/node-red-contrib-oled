@@ -15,6 +15,10 @@
             "display": "Display",
             "name" : "Name"
         },
+        "clock": {
+            "display": "Display",
+            "name": "Name"
+        },
         "dimmed" : {
             "display": "Display",
             "name" : "Name"
@@ -62,10 +66,7 @@
         "wifi" : {
             "display": "Display",
             "name" : "Name"
-        },
-        "clock" : {
-            "display": "Display",
-            "name" : "Name"
+        }
+        
         }
     }
-}

@@ -1,71 +1,72 @@
 {
     "oled" : {
         "config" : {
-            "name" : "Name",
-            "address" : "Bus Address",
-            "width" : "Width",
-            "height": "Height",
-            "fanAddress" : "Fan Bus Address"
+            "name" : "Nom",
+            "address" : "Direction du bus",
+            "width" : "Largeur",
+            "height": "Haut",
+            "fanAddress" : "Fan-Bus-Adresse"
         },
         "battery" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
         },
         "clear" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
+        },
+        "clock": {
+            "display": "Affichage",
+            "name": "Nom"
         },
         "dimmed" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
         },
         "fillRectangle" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
         },
         "fan" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
         },
         "invertion" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
         },
         "image" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
         },
         "line" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
         },
         "pixel" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
         },
         "scroll" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
         },
         "string" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
         },
         "turn-on" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
         },
         "turn-off" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
         },
         "wifi" : {
-            "display": "Display",
-            "name" : "Name"
-        },
-        "clock" : {
-            "display": "Display",
-            "name" : "Name"
+            "display": "Affichage",
+            "name" : "Nom"
+        }
+        
         }
     }
-}

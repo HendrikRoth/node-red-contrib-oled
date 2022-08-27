@@ -7,7 +7,7 @@
 
 <script type="text/x-red" data-help-name="Battery">
 	<p>Draws a battery display (w:19, h:9)</p>
-	<p>Payload should contain coordinates of the start pixels and the battery charge percentage</p>
+	<p><b>Payload</b> should contain coordinates of the start pixels and the battery charge percentage</p>
 	<p>the treasholds are <10,10-40,40-70,70-100</p>
 	<p>abscissa: <b>msg.payload.x</b></p>
 	<p>ordinate: <b>msg.payload.y</b></p>
@@ -17,32 +17,33 @@
 
 <script type="text/x-red" data-help-name="Bluetooth">
 	<p>Draws a Bluetooth logo (w:8, h:10)</p>
-	<p>Payload should contain coordinates of the start Bluetooth logo</p>
+	<p><b>Payload</b> should contain coordinates of the start Bluetooth logo</p>
 	<p>abscissa: <b>msg.payload.x</b></p>
 	<p>ordinate: <b>msg.payload.y</b></p>
 	<p>Example: <b>{"x":1,"y":1}</b></p>
 </script>
 
 <script type="text/x-red" data-help-name="Clear">
-    	<p>Clears the Oled display</p>
-    	<p>Payload should be set to <b>true</b> to enable the node</p>
+    <p>Clears the Oled display</p>
+    <p><b>Payload</b> should be set to <b>true</b> to enable the node</p>
 	<p>If pixels are inverted, set all pixels to 1</p>
 </script>
 
 <script type="text/x-red" data-help-name="Clock">
-    	<p>Draws a clock</p>
-    	<p>Payload should be set to <b>true</b> to enable the node</p>
-		<p>or set to <b>false</b> to disble</p>
+    <p>Draws a clock</p>
+    <p><b>Payload</b> status should be set to <b>on</b> to enable the node</p>
+	<p>or set to <b>off</b> to disble</p>
+	<p>Example: <b>{"status": "on"}</b></p>
 </script>
 
 <script type="text/x-red" data-help-name="Dimmed">
-    	<p>Changes contrast of the Oled display</p>
-    	<p>Payload should be set to <b>true</b> to reduce contrast and to <b>false</b> to turn back to bright</p>
+    <p>Changes contrast of the Oled display</p>
+    <p><b>Payload</b> should be set to <b>true</b> to reduce contrast and to <b>false</b> to turn back to bright</p>
 </script>
 
 <script type="text/x-red" data-help-name="FillRectangle">
 	<p>Draws a filled rectangle </p>
-	<p>Payload should contain coordinates of the start pixel, the width, the height and the color</p>
+	<p><b>Payload</b> should contain coordinates of the start pixel, the width, the height and the color</p>
 	<p>if color is set to <b>0</b> the rectangle will turn off</p>
 	<p>abscissa: <b>msg.payload.x</b></p>
 	<p>ordinate: <b>msg.payload.y</b></p>
@@ -64,13 +65,13 @@
 </script>
 
 <script type="text/x-red" data-help-name="Invertion">
-    	<p>Inverts all pixels color values</p>
-    	<p>Payload should be set to <b>true</b> to invert and to <b>false</b> to reverse</p>
+    <p>Inverts all pixels color values</p>
+    <p><b>Payload</b> should be set to <b>true</b> to invert and to <b>false</b> to reverse</p>
 </script>
 
 <script type="text/x-red" data-help-name="Image">
 	<p>Draws a png image.</p>
-	<p>Payload should contain the path to png file, its coordinates and clear display before displaying the image.</p>
+	<p><b>Payload</b> should contain the path to png file, its coordinates and clear display before displaying the image.</p>
 	<p>image: <b>msg.payload.image</b></p>
 	<p>abscissa: <b>msg.payload.x</b></p>
 	<p>ordinate: <b>msg.payload.y</b></p>
@@ -83,7 +84,7 @@
 
 <script type="text/x-red" data-help-name="Line">
 	<p>Draws a line</p>
-	<p>Payload should contain coordinates of the start pixel, the end pixel and the color</p>
+	<p><b>Payload</b> should contain coordinates of the start pixel, the end pixel and the color</p>
 	<p>if color is set to <b>0</b> the line will turn off</p>
 	<p>start abscissa: <b>msg.payload.x0</b></p>
 	<p>start ordinate: <b>msg.payload.y0</b></p>
@@ -95,7 +96,7 @@
 
 <script type="text/x-red" data-help-name="Pixel">
 	<p>Displays specific pixel(s)</p>
-	<p>Payload should contain coordinates of the pixel(s) and the color</p>
+	<p><b>Payload</b> should contain coordinates of the pixel(s) and the color</p>
 	<p>each pixel must be define like <b>[abscissa,ordinate,color]</b></p>
 	<p>if color is set to <b>0</b> the pixel will turn off</p>
 	<p>Example:</p>
@@ -105,7 +106,7 @@
 
 <script type="text/x-red" data-help-name="Scroll">
 	<p>Scrolls the display</p>
-	<p>Payload should contain direction, start position and stop position.</p>
+	<p><b>Payload</b> should contain direction, start position and stop position.</p>
 	<p>direction: <b>msg.payload.direction</b></p>
 	<p>start: <b>msg.payload.start</b></p>
  	<p>stop: <b>msg.payload.stop</b></p>
@@ -116,7 +117,7 @@
 
 <script type="text/x-red" data-help-name="String">
     <p>Writes the inlet string with multiple of font 5x7</p>
-    <p>Payload should contain the font size (multiple of the original one in 5x7), coordinates where the string starts, and the text itself</p>
+    <p><b>Payload</b> should contain the font size (multiple of the original one in 5x7), coordinates where the string starts, and the text itself</p>
 	<p>size: <b>msg.payload.size</b></p>
 	<p>abscissa: <b>msg.payload.x</b></p>
 	<p>ordinate: <b>msg.payload.y</b></p>
@@ -125,21 +126,21 @@
 </script>
 
 <script type="text/x-red" data-help-name="Turn-on">
-    	<p>Turns on the Oled display</p>
-    	<p>Payload should be set to <b>true</b> to enable the node</p>
+    <p>Turns on the Oled display</p>
+    <p><b>Payload</b> should be set to <b>true</b> to enable the node</p>
 	<p>All previous display will be restore</p>
 </script>
 
 
 <script type="text/x-red" data-help-name="Turn-off">
-    	<p>Turns off the Oled display</p>
-    	<p>Payload should be set to <b>true</b> to enable the node</p>
+    <p>Turns off the Oled display</p>
+    <p><b>Payload</b> should be set to <b>true</b> to enable the node</p>
 	<p>All previous display will be store</p>
 </script>
 
 <script type="text/x-red" data-help-name="Wifi">
 	<p>Draws a wifi display (w:19, h:9)</p>
-	<p>Payload should contain coordinates of the start pixels and the wifi power reception</p>
+	<p><b>Payload</b> should contain coordinates of the start pixels and the wifi power reception</p>
 	<p>the treasholds are <10,10-40,40-70,70-100</p>
 	<p>abscissa: <b>msg.payload.x</b></p>
 	<p>ordinate: <b>msg.payload.y</b></p>
