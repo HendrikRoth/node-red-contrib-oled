@@ -1,5 +1,5 @@
 {
-  "name": "node-red-contrib-oled",
+  "name": "node-red-contrib-oled-i2c",
   "version": "1.1.0",
   "description": "Node-Red node for controlling OLED displays with SSD1306 and SH1106 drivers",
   "main": "index.js",
@@ -15,9 +15,9 @@
   "author": "Hendrik Roth <hi@hendrikroth.com>, Abdul Hadi Fikri",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/HendrikRoth/node-red-contrib-oled/issues"
+    "url": "https://github.com/hadifikri/node-red-contrib-oled-i2c/issues"
   },
-  "homepage": "https://github.com/HendrikRoth/node-red-contrib-oled#readme",
+  "homepage": "https://github.com/hadifikri/node-red-contrib-oled-i2c",
   "dependencies": {
     "i2c-bus": "^5.2.2",
     "oled-font-5x7": "^1.0.3",
