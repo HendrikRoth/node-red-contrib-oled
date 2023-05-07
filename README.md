@@ -1,16 +1,12 @@
 node-red-contrib-oled
 =====================
+Forked from https://www.npmjs.com/package/node-red-contrib-oled  
+  
 ![Image text](https://raw.githubusercontent.com/HendrikRoth/node-red-contrib-oled/master/screen%20example.png)
 
 
 
 Node-Red node to talk to OLED displays, connected by i2c.
-
-## now maintained
-
-```
-npm install node-red-contrib-oled
-```
 
 # Usage
 
