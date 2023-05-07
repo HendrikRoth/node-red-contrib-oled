@@ -2,10 +2,9 @@
 var fs = require('fs');
 var PNG = require('pngjs').PNG;
 var i2c = require('i2c-bus');
-var i2cBus = i2c.openSync(1);
-var Oled = require('oled-i2c-bus');
+var Oled = require('oled-rpi-i2c-bus');
 var font = require('oled-font-5x7');
-//var timeoutCollection = require('time-events-manager/TimeoutCollection');
+
 var timers = [];
 var numTimers = 0;
 myInterval = null;
@@ -66,7 +65,8 @@ module.exports = function(RED) {
 	'---------------------------------- Check ----------------------------------'
 	function check(display, node) {
 		if (node.clear) {
-			display.clearDisplay()
+			// console.log("Display checked!");
+			display.clearDisplay();
 			display.setCursor(1, 1)
 			display.update()
 		}
@@ -79,9 +79,12 @@ module.exports = function(RED) {
 		self.config = {
 			width: parseInt(config.width),
 			height: parseInt(config.height),
-			address: config.address.includes('0x') ? parseInt('0x' + config.address) : parseInt(config.address)
+			address: config.address.includes('0x') ? parseInt('0x' + config.address) : parseInt(config.address),
+			driver:config.driver,
+			i2cBus:parseInt(config.i2cBus)
 		}
-		displays[self.id] = new Oled(i2cBus, self.config)
+		
+		displays[self.id] = new Oled(i2c.openSync(self.config.i2cBus), self.config)
 		check(displays[self.id], { clear: true })
 	}
 
@@ -94,7 +97,7 @@ module.exports = function(RED) {
 			check(self.display, n)
 			try {
 				var p = msg.payload
-				self.display.drawPixel(msg.payload)
+				self.display.drawPixel(msg.payload,true)
 			} catch (err) {
 				self.error(err)
 			}
