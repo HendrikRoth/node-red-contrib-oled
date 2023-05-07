@@ -2,14 +2,11 @@
 var fs = require('fs');
 var PNG = require('pngjs').PNG;
 var i2c = require('i2c-bus');
-var i2cBus = i2c.openSync(1);
-var Oled = require('oled-i2c-bus');
-var font = require('oled-font-5x7');
-//var timeoutCollection = require('time-events-manager/TimeoutCollection');
+var Oled = require('oled-rpi-i2c-bus');
+var font = require('oled-font-pack');
+
 var timers = [];
-var numTimers = 0;
 myInterval = null;
-var init = true;
 var exec = require('child_process').exec;
 
 exec('sudo systemctl status RGB_Cooling_HAT_C_1 | grep " Active: active (running)" | wc -l',
@@ -57,8 +54,13 @@ module.exports = function(RED) {
 			RED.nodes.createNode(self, n)
 			self.display = displays[n.display]
 			self.on('input', function(msg) {
-				self.display[fn](msg.payload)
-				self.display.update()
+				try{
+					self.display[fn](msg.payload)
+					self.display.update()
+				}
+				catch(e){
+					self.error(e);
+				}
 			})
 		}
 	}
@@ -66,7 +68,7 @@ module.exports = function(RED) {
 	'---------------------------------- Check ----------------------------------'
 	function check(display, node) {
 		if (node.clear) {
-			display.clearDisplay()
+			display.clearDisplay();
 			display.setCursor(1, 1)
 			display.update()
 		}
@@ -79,10 +81,16 @@ module.exports = function(RED) {
 		self.config = {
 			width: parseInt(config.width),
 			height: parseInt(config.height),
-			address: config.address.includes('0x') ? parseInt('0x' + config.address) : parseInt(config.address)
+			address: config.address.includes('0x') ? parseInt('0x' + config.address) : parseInt(config.address),
+			driver:config.driver,
+			i2cBus:parseInt(config.i2cBus)
 		}
-		displays[self.id] = new Oled(i2cBus, self.config)
-		check(displays[self.id], { clear: true })
+		try{
+			displays[self.id] = new Oled(i2c.openSync(self.config.i2cBus), self.config)
+			check(displays[self.id], { clear: true })
+		}catch(e){
+			self.error(e);
+		}
 	}
 
 	'---------------------------------- Pixel ----------------------------------'
@@ -91,10 +99,10 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				var p = msg.payload
-				self.display.drawPixel(msg.payload)
+				self.display.drawPixel(msg.payload,true)
 			} catch (err) {
 				self.error(err)
 			}
@@ -107,8 +115,8 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				var p = msg.payload
 				self.display.drawLine(p.x0,p.y0,p.x1,p.y1,p.color,true)
 			} catch (err) {
@@ -123,8 +131,8 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				var p = msg.payload
 				self.display.fillRect(p.x,p.y,p.w,p.h,p.color,true)
 			} catch (err) {
@@ -139,24 +147,25 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 
 		self.display = displays[n.display]
-
 		self.on('input', function(msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				if (typeof msg.payload === 'object') {
 					var p = msg.payload
+					var f = p.hasOwnProperty("font") ? p.font:  "oled_5x7";
 					if (p.x || p.y) {
 						self.display.setCursor(p.x || 1, p.y || 1)
 					}
 					self.display.writeString(
-						font,
+						font[f],
 						p.size || n.size || 1, p.text || '',
 						p.color || n.color || 1,
-						typeof p.wrapping === 'undefined' ? n.wrapping : p.wrapping
+						typeof p.wrapping === 'undefined' ? n.wrapping : p.wrapping,
+						true
 					)
 				} else {
 					self.display.setCursor(1, 1)
-					self.display.writeString(font, 1, msg.payload, 1, true)
+					self.display.writeString(font.oled_5x7, 1, msg.payload, 1, true)
 				}
 			} catch (err) {
 				self.error(err)
@@ -170,9 +179,9 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
-			//console.log('Scroll ' + "parms: "  + msg.payload);
 			try {
+				check(self.display, n)
+				//console.log('Scroll ' + "parms: "  + msg.payload);
 				var p = msg.payload
 				if (typeof p !== 'undefined') {
 					if (typeof p === 'boolean' && !p) {
@@ -195,8 +204,8 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				var p = msg.payload
 				self.display.drawLine(p.x,p.y,p.x+16,p.y,1)
 				self.display.drawLine(p.x,p.y+8,p.x+16,p.y+8,1)
@@ -229,14 +238,15 @@ module.exports = function(RED) {
 			}
 		})
 	}
+	
 	'---------------------------------- Bluetooth ----------------------------------'
 	function Bluetooth(n) {
 		var self = this
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function (msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				var p = msg.payload
 				self.display.drawLine(p.x + 5, p.y +1 , p.x + 5, p.y + 11, 1)
 				self.display.drawLine(p.x +2 , p.y + 3, p.x + 9, p.y + 8, 1)
@@ -255,8 +265,8 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				var p = msg.payload
 				self.display.drawLine(p.x,p.y,p.x+8,p.y,1)
 				self.display.drawLine(p.x,p.y,p.x+4,p.y+4,1)
@@ -297,10 +307,9 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
-			//console.log("Oled timers actives: " + timeoutCollection.getAll());
-
 			try {
+				check(self.display, n)
+				//console.log("Oled timers actives: " + timeoutCollection.getAll());
 				init = true;
 				var p = msg.payload
 				//var files = fs.readdirSync('.');
@@ -325,7 +334,7 @@ module.exports = function(RED) {
 						self.display.clearDisplay();
 						self.error(err)
 						self.display.writeString(
-							font,
+							font.oled_5x7,
 							1, tryImage ,
 							1,
 							typeof p.wrapping === 'undefined' ? n.wrapping : p.wrapping
