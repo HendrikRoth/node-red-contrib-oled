@@ -54,8 +54,13 @@ module.exports = function(RED) {
 			RED.nodes.createNode(self, n)
 			self.display = displays[n.display]
 			self.on('input', function(msg) {
-				self.display[fn](msg.payload)
-				self.display.update()
+				try{
+					self.display[fn](msg.payload)
+					self.display.update()
+				}
+				catch(e){
+					self.error(e);
+				}
 			})
 		}
 	}
@@ -63,7 +68,6 @@ module.exports = function(RED) {
 	'---------------------------------- Check ----------------------------------'
 	function check(display, node) {
 		if (node.clear) {
-			// console.log("Display checked!");
 			display.clearDisplay();
 			display.setCursor(1, 1)
 			display.update()
@@ -81,9 +85,12 @@ module.exports = function(RED) {
 			driver:config.driver,
 			i2cBus:parseInt(config.i2cBus)
 		}
-		
-		displays[self.id] = new Oled(i2c.openSync(self.config.i2cBus), self.config)
-		check(displays[self.id], { clear: true })
+		try{
+			displays[self.id] = new Oled(i2c.openSync(self.config.i2cBus), self.config)
+			check(displays[self.id], { clear: true })
+		}catch(e){
+			self.error(e);
+		}
 	}
 
 	'---------------------------------- Pixel ----------------------------------'
@@ -92,8 +99,8 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				var p = msg.payload
 				self.display.drawPixel(msg.payload,true)
 			} catch (err) {
@@ -108,8 +115,8 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				var p = msg.payload
 				self.display.drawLine(p.x0,p.y0,p.x1,p.y1,p.color,true)
 			} catch (err) {
@@ -124,8 +131,8 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				var p = msg.payload
 				self.display.fillRect(p.x,p.y,p.w,p.h,p.color,true)
 			} catch (err) {
@@ -140,10 +147,9 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 
 		self.display = displays[n.display]
-
 		self.on('input', function(msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				if (typeof msg.payload === 'object') {
 					var p = msg.payload
 					var f = p.hasOwnProperty("font") ? p.font:  "oled_5x7";
@@ -173,9 +179,9 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
-			//console.log('Scroll ' + "parms: "  + msg.payload);
 			try {
+				check(self.display, n)
+				//console.log('Scroll ' + "parms: "  + msg.payload);
 				var p = msg.payload
 				if (typeof p !== 'undefined') {
 					if (typeof p === 'boolean' && !p) {
@@ -198,8 +204,8 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				var p = msg.payload
 				self.display.drawLine(p.x,p.y,p.x+16,p.y,1)
 				self.display.drawLine(p.x,p.y+8,p.x+16,p.y+8,1)
@@ -232,14 +238,15 @@ module.exports = function(RED) {
 			}
 		})
 	}
+	
 	'---------------------------------- Bluetooth ----------------------------------'
 	function Bluetooth(n) {
 		var self = this
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function (msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				var p = msg.payload
 				self.display.drawLine(p.x + 5, p.y +1 , p.x + 5, p.y + 11, 1)
 				self.display.drawLine(p.x +2 , p.y + 3, p.x + 9, p.y + 8, 1)
@@ -258,8 +265,8 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
 			try {
+				check(self.display, n)
 				var p = msg.payload
 				self.display.drawLine(p.x,p.y,p.x+8,p.y,1)
 				self.display.drawLine(p.x,p.y,p.x+4,p.y+4,1)
@@ -300,10 +307,9 @@ module.exports = function(RED) {
 		RED.nodes.createNode(self, n)
 		self.display = displays[n.display]
 		self.on('input', function(msg) {
-			check(self.display, n)
-			//console.log("Oled timers actives: " + timeoutCollection.getAll());
-
 			try {
+				check(self.display, n)
+				//console.log("Oled timers actives: " + timeoutCollection.getAll());
 				init = true;
 				var p = msg.payload
 				//var files = fs.readdirSync('.');
