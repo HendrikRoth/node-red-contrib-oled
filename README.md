@@ -36,6 +36,7 @@ dtoverlay=i2c-gpio,bus=3
         - all features
     * SH1106
         - `Scroll` feature is not available (no native support)
+* Support various font from `oled-font-pack` package.  
 
 # Please Contact Us
 If you have any problem when using our package, please contact us..
