@@ -555,12 +555,61 @@
 
 <script type="text/x-red" data-help-name="String">
     <p>Writes the inlet string with multiple of font 5x7</p>
-    <p><b>Payload</b> should contain the font size (multiple of the original one in 5x7), coordinates where the string starts, and the text itself</p>
-	<p>size: <b>msg.payload.size</b></p>
-	<p>abscissa: <b>msg.payload.x</b></p>
-	<p>ordinate: <b>msg.payload.y</b></p>
-    <p>string: <b>msg.payload.text</b></p>
-	<p>Example: <b>{"size":2,"x":1,"y":1,"text":"Oled"}</b></p>
+    <p><b>Payload</b> should contain the font size (default to multiple of the original one in 5x7 or based on the selected font type), coordinates where the string starts, and the text itself</p>
+	<p>size: <code>msg.payload.size</code></p>
+	<p>abscissa: <code>msg.payload.x</code></p>
+	<p>ordinate: <code>msg.payload.y</code></p>
+	<p>font: <code>msg.payload.font</code></p>
+	<ul>
+		<li><code>oled_3x5</code></li>
+		<li><code>tiny_4x6</code></li>
+		<li><code>oled_5x7</code></li>
+		<li><code>small_6x8</code></li>
+		<li><code>sinclair_8x8</code></li>
+		<li><code>sinclair_inverted_8x8</code></li>
+		<li><code>tiny_8x8</code></li>
+		<li><code>cp437_8x8</code></li>
+		<li><code>myke2_8x9</code></li>
+		<li><code>small_8x12</code></li>
+		<li><code>tron_8x12</code></li>
+		<li><code>retro_8x16</code></li>
+		<li><code>medium_numbers_12x16</code></li>
+		<li><code>big_numbers_14x24</code></li>
+		<li><code>arial_bold_16x16</code></li>
+		<li><code>arial_italic_16x16</code></li>
+		<li><code>arial_normal_16x16</code></li>
+		<li><code>franklin_gothic_normal_16x16</code></li>
+		<li><code>hallfetica_normal_16x16</code></li>
+		<li><code>nadianne_16x16</code></li>
+		<li><code>sinclair_medium_16x16</code></li>
+		<li><code>sinclair_medium_inverted_16x16</code></li>
+		<li><code>swiss_721_outline_16x16</code></li>
+		<li><code>various_symbols_16x16</code></li>
+		<li><code>dot_matrix_medium_16x22</code></li>
+		<li><code>dot_matrix_medium_zero_slash_16x22</code></li>
+		<li><code>dot_matrix_medium_numbers_only_16x22</code></li>
+		<li><code>arial_round_16x24</code></li>
+		<li><code>ocr_a_extended_medium_16x24</code></li>
+		<li><code>grotesk_16x32</code></li>
+		<li><code>grotesk_bold_16x32</code></li>
+		<li><code>retro_16x32</code></li>
+		<li><code>various_symbols_16x32</code></li>
+		<li><code>various_symbols_v2_16x32</code></li>
+		<li><code>dot_matrix_large_numbers_only_24x29</code></li>
+		<li><code>inconsola_24x32</code></li>
+		<li><code>ubuntu_24x32</code></li>
+		<li><code>ubuntu_bold_24x32</code></li>
+		<li><code>dingbats1_extra_large_32x24</code></li>
+		<li><code>various_symbols_32x32</code></li>
+	</ul>
+    <p>string: <code>msg.payload.text</code></p>
+	
+	<p>Example: <code>{"size":2,"x":1,"y":1,"font":"oled_5x7","text":"Oled"}</code></p>
+
+	<p>
+		The <code>font</code> field is optional, defaults to "<code>oled_5x7</code>". 
+		Use <a href="https://www.npmjs.com/package/oled-font-pack"><code>oled-font-pack</code></a> package internally.
+	</p>
 </script>
 /*!
 **********************************************************************************************************************************************************

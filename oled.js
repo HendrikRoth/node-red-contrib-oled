@@ -3,12 +3,10 @@ var fs = require('fs');
 var PNG = require('pngjs').PNG;
 var i2c = require('i2c-bus');
 var Oled = require('oled-rpi-i2c-bus');
-var font = require('oled-font-5x7');
+var font = require('oled-font-pack');
 
 var timers = [];
-var numTimers = 0;
 myInterval = null;
-var init = true;
 var exec = require('child_process').exec;
 
 exec('sudo systemctl status RGB_Cooling_HAT_C_1 | grep " Active: active (running)" | wc -l',
@@ -148,18 +146,20 @@ module.exports = function(RED) {
 			try {
 				if (typeof msg.payload === 'object') {
 					var p = msg.payload
+					var f = p.hasOwnProperty("font") ? p.font:  "oled_5x7";
 					if (p.x || p.y) {
 						self.display.setCursor(p.x || 1, p.y || 1)
 					}
 					self.display.writeString(
-						font,
+						font[f],
 						p.size || n.size || 1, p.text || '',
 						p.color || n.color || 1,
-						typeof p.wrapping === 'undefined' ? n.wrapping : p.wrapping
+						typeof p.wrapping === 'undefined' ? n.wrapping : p.wrapping,
+						true
 					)
 				} else {
 					self.display.setCursor(1, 1)
-					self.display.writeString(font, 1, msg.payload, 1, true)
+					self.display.writeString(font.oled_5x7, 1, msg.payload, 1, true)
 				}
 			} catch (err) {
 				self.error(err)
@@ -328,7 +328,7 @@ module.exports = function(RED) {
 						self.display.clearDisplay();
 						self.error(err)
 						self.display.writeString(
-							font,
+							font.oled_5x7,
 							1, tryImage ,
 							1,
 							typeof p.wrapping === 'undefined' ? n.wrapping : p.wrapping

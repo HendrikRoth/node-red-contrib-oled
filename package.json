@@ -20,8 +20,8 @@
   "homepage": "https://github.com/hadifikri/node-red-contrib-oled-i2c",
   "dependencies": {
     "i2c-bus": "^5.2.2",
-    "oled-font-5x7": "^1.0.3",
-    "oled-rpi-i2c-bus": "^1.1.0",
+    "oled-font-pack": "^1.0.1",
+    "oled-rpi-i2c-bus": "^1.1.1",
     "pngjs": "^6.0.0",
     "pngparse": "^2.0.1",
     "time-events-manager": "^0.1.1"
@@ -36,7 +36,8 @@
     {
       "name": "Antonio Maza",
       "email": "waterbrain@pelaire.com"
-    },{
+    },
+    {
       "name": "Abdul Hadi Fikri",
       "email": "hadifikri@gmail.com"
     }
