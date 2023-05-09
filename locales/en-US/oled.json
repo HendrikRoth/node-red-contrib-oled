@@ -5,7 +5,9 @@
             "address" : "Bus Address",
             "width" : "Width",
             "height": "Height",
-            "fanAddress" : "Fan Bus Address"
+            "fanAddress" : "Fan Bus Address",
+            "i2cBus":"I2C Bus",
+            "driver":"Driver"
         },
         "battery" : {
             "display": "Display",
