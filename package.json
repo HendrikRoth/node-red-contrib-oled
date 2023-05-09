@@ -21,7 +21,7 @@
   "dependencies": {
     "i2c-bus": "^5.2.2",
     "oled-font-pack": "^1.0.1",
-    "oled-rpi-i2c-bus": "^1.1.3",
+    "oled-rpi-i2c-bus": "^1.1.4",
     "pngjs": "^6.0.0",
     "pngparse": "^2.0.1",
     "time-events-manager": "^0.1.1"
