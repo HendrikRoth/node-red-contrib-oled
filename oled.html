@@ -1,4 +1,6 @@
-/*! ********************************************************************************************************************************************************** */
+/*!
+**********************************************************************************************************************************************************
+*/
 <script type='text/javascript'>
 	RED.nodes.registerType('oled-config', {
 		category: 'config',
@@ -21,9 +23,19 @@
 				value: 0x3c,
 				type: 'number',
 				require: true
+			},
+			driver: {
+				value: "SSD1306",
+				typeof: 'string',
+				require: true
+			},
+			i2cBus: {
+				value: 1,
+				type: 'number',
+				require: true
 			}
 		},
-		label: function() {
+		label: function () {
 			return this.name || 'OLED' + this.address;
 		}
 	})
@@ -45,6 +57,23 @@
 		<label for='node-config-input-height'><i class='fa fa-arrows-v'></i> <span data-i18n="oled.config.height"></label>
 		<input type='text' id='node-config-input-height' />
 	</div>
+	<div class='form-row'>
+		<label for='node-config-input-driver'><i class='fa fa-anchor'></i> <span data-i18n="oled.config.driver"></label>
+		<select id="node-config-input-driver">
+			<option value="SSD1306">SSD1306</option>
+			<option value="SH1106">SH1106</option>
+		</select>
+	</div>
+	<div class='form-row'>
+		<label for='node-config-input-i2cBus'><i class='fa fa-bolt'></i> <span data-i18n="oled.config.i2cBus"></label>
+		<input type='number' id='node-config-input-i2cBus' />
+	</div>
+</script>
+<script type="text/html" data-help-name="oled-config">
+    <p>A Node-RED to manage i2c Oleds and fans, or to recognize.</p>
+    <h3>Outputs</h3>
+    <h3>Details</h3>
+    <p>This node provides a single button widget in the dashboard.</p>
 </script>
 /*!
 **********************************************************************************************************************************************************
@@ -82,7 +111,15 @@
 	</div>
 </script>
 
-
+<script type="text/x-red" data-help-name="Battery">
+	<p>Draws a battery display (w:19, h:9)</p>
+	<p><b>Payload</b> should contain coordinates of the start pixels and the battery charge percentage</p>
+	<p>the treasholds are <10,10-40,40-70,70-100</p>
+	<p>abscissa: <b>msg.payload.x</b></p>
+	<p>ordinate: <b>msg.payload.y</b></p>
+ 	<p>percentage: <b>msg.payload.p</b></p>
+	<p>Example: <b>{"x":1,"y":1,"p":25}</b></p>
+</script>
 /*!
 **********************************************************************************************************************************************************
 */
@@ -119,7 +156,13 @@
 	</div>
 </script>
 
-
+<script type="text/x-red" data-help-name="Bluetooth">
+	<p>Draws a Bluetooth logo (w:8, h:10)</p>
+	<p><b>Payload</b> should contain coordinates of the start Bluetooth logo</p>
+	<p>abscissa: <b>msg.payload.x</b></p>
+	<p>ordinate: <b>msg.payload.y</b></p>
+	<p>Example: <b>{"x":1,"y":1}</b></p>
+</script>
 
 /*!
 **********************************************************************************************************************************************************
@@ -128,7 +171,7 @@
 	RED.nodes.registerType('Clear', {
 		category: 'oled',
 		color: '#3FADB5',
-        icon: 'OledClear.png',
+		icon: 'OledClear.png',
 		defaults: {
 			name: {
 				value: '',
@@ -140,7 +183,7 @@
 		},
 		inputs: 1,
 		outputs: 0,
-		label: function() {
+		label: function () {
 			return this.name || "Clear";
 		}
 	})
@@ -157,7 +200,11 @@
 	</div>
 </script>
 
-
+<script type="text/x-red" data-help-name="Clear">
+    <p>Clears the Oled display</p>
+    <p><b>Payload</b> should be set to <b>true</b> to enable the node</p>
+	<p>If pixels are inverted, set all pixels to 1</p>
+</script>
 /*!
 **********************************************************************************************************************************************************
 */
@@ -165,7 +212,7 @@
 	RED.nodes.registerType('Dimmed', {
 		category: 'oled',
 		color: '#3FADB5',
-        icon: 'OledDim.png',
+		icon: 'OledDim.png',
 		defaults: {
 			name: {
 				value: '',
@@ -177,7 +224,7 @@
 		},
 		inputs: 1,
 		outputs: 0,
-		label: function() {
+		label: function () {
 			return this.name || "Dimmed";
 		}
 	})
@@ -194,7 +241,10 @@
 	</div>
 </script>
 
-
+<script type="text/x-red" data-help-name="Dimmed">
+    <p>Changes contrast of the Oled display</p>
+    <p><b>Payload</b> should be set to <b>true</b> to reduce contrast and to <b>false</b> to turn back to bright</p>
+</script>
 /*!
 **********************************************************************************************************************************************************
 */
@@ -231,7 +281,17 @@
 	</div>
 </script>
 
-
+<script type="text/x-red" data-help-name="FillRectangle">
+	<p>Draws a filled rectangle </p>
+	<p><b>Payload</b> should contain coordinates of the start pixel, the width, the height and the color</p>
+	<p>if color is set to <b>0</b> the rectangle will turn off</p>
+	<p>abscissa: <b>msg.payload.x</b></p>
+	<p>ordinate: <b>msg.payload.y</b></p>
+ 	<p>width: <b>msg.payload.w</b></p>
+ 	<p>height: <b>msg.payload.h</b></p>
+  	<p>color: <b>msg.payload.color</b></p>
+	<p>Example: <b>{"x":1,"y":1,"w":10,"h":20,"color":1}</b></p>
+</script>
 /*!
 **********************************************************************************************************************************************************
 */
@@ -239,7 +299,7 @@
 	RED.nodes.registerType('Invertion', {
 		category: 'oled',
 		color: '#3FADB5',
-        icon: 'OledInvert.png',
+		icon: 'OledInvert.png',
 		defaults: {
 			name: {
 				value: '',
@@ -251,7 +311,7 @@
 		},
 		inputs: 1,
 		outputs: 0,
-		label: function() {
+		label: function () {
 			return this.name || "Invertion";
 		}
 	})
@@ -268,7 +328,10 @@
 	</div>
 </script>
 
-
+<script type="text/x-red" data-help-name="Invertion">
+    <p>Inverts all pixels color values</p>
+    <p><b>Payload</b> should be set to <b>true</b> to invert and to <b>false</b> to reverse</p>
+</script>
 /*!
 **********************************************************************************************************************************************************
 */
@@ -305,7 +368,18 @@
 	</div>
 </script>
 
-
+<script type="text/x-red" data-help-name="Image">
+	<p>Draws a png image.</p>
+	<p><b>Payload</b> should contain the path to png file, its coordinates and clear display before displaying the image.</p>
+	<p>image: <b>msg.payload.image</b></p>
+	<p>abscissa: <b>msg.payload.x</b></p>
+	<p>ordinate: <b>msg.payload.y</b></p>
+ 	<p>clear: <b>msg.payload.clear</b></p>
+	<p>animated: <b>msg.payload.animated</b></p>
+	<p>reset: <b>msg.payload.reset</b></p>
+	<p>Example: <b>{"image": "./OledImage.png", "x":1, "y":1 , "clear":true , "animated":true}</b></p>
+	<p>the <b>x</b>, <b>y</b>, <b>clear</b>, <b>animated</b> and <b>reset</b> parameters are optional.</p>
+</script>
 /*!
 **********************************************************************************************************************************************************
 */
@@ -342,7 +416,17 @@
 	</div>
 </script>
 
-
+<script type="text/x-red" data-help-name="Line">
+	<p>Draws a line</p>
+	<p><b>Payload</b> should contain coordinates of the start pixel, the end pixel and the color</p>
+	<p>if color is set to <b>0</b> the line will turn off</p>
+	<p>start abscissa: <b>msg.payload.x0</b></p>
+	<p>start ordinate: <b>msg.payload.y0</b></p>
+ 	<p>end abscissa: <b>msg.payload.x1</b></p>
+ 	<p>end ordinate: <b>msg.payload.y1</b></p>
+  	<p>color: <b>msg.payload.color</b></p>
+	<p>Example: <b>{"x0":1,"y0":1,"x1":30,"y1":30,"color":1}</b></p>
+</script>
 /*!
 **********************************************************************************************************************************************************
 */
@@ -379,30 +463,38 @@
 	</div>
 </script>
 
-
+<script type="text/x-red" data-help-name="Pixel">
+	<p>Displays specific pixel(s)</p>
+	<p><b>Payload</b> should contain coordinates of the pixel(s) and the color</p>
+	<p>each pixel must be define like <b>[abscissa,ordinate,color]</b></p>
+	<p>if color is set to <b>0</b> the pixel will turn off</p>
+	<p>Example:</p>
+	<p>One pixel:<b>msg.payload=[1,1,1]</b></p>
+	<p>Several pixels: <b>msg.payload=[[1,1,1],[24,32,0],...]</b></p>
+</script>
 /*!
 **********************************************************************************************************************************************************
 */
 <script type='text/javascript'>
-RED.nodes.registerType('Scroll', {
-category: 'oled',
-color: '#3FADB5',
-icon: 'OledScroll.png',
-defaults: {
-name: {
-value: '',
-required: false
-},
-display: {
-type: 'oled-config'
-}
-},
-inputs: 1,
-outputs: 0,
-label: function() {
-return this.name || "Scroll";
-}
-})
+	RED.nodes.registerType('Scroll', {
+		category: 'oled',
+		color: '#3FADB5',
+		icon: 'OledScroll.png',
+		defaults: {
+			name: {
+				value: '',
+				required: false
+			},
+			display: {
+				type: 'oled-config'
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		label: function () {
+			return this.name || "Scroll";
+		}
+	})
 </script>
 
 <script type='text/x-red' data-template-name='Scroll'>
@@ -416,7 +508,16 @@ return this.name || "Scroll";
 	</div>
 </script>
 
-
+<script type="text/x-red" data-help-name="Scroll">
+	<p>Scrolls the display</p>
+	<p><b>Payload</b> should contain direction, start position and stop position.</p>
+	<p>direction: <b>msg.payload.direction</b></p>
+	<p>start: <b>msg.payload.start</b></p>
+ 	<p>stop: <b>msg.payload.stop</b></p>
+	<p>Example: <b>{"direction":"left","start":0,"stop":128}</b></p>
+	<p>If you want to disable it, you must pass the boolean <b>false</b> value as parameter.</p> 
+	<p>Possible values for scroll direction are <b>"left"</b> <b>"right"</b>  <b>"left_diagonal"</b>  <b>"right_diagonal"</b>  .</p> 
+</script>
 /*!
 **********************************************************************************************************************************************************
 */
@@ -452,7 +553,64 @@ return this.name || "Scroll";
 	</div>
 </script>
 
+<script type="text/x-red" data-help-name="String">
+    <p>Writes the inlet string with multiple of font 5x7</p>
+    <p><b>Payload</b> should contain the font size (default to multiple of the original one in 5x7 or based on the selected font type), coordinates where the string starts, and the text itself</p>
+	<p>size: <code>msg.payload.size</code></p>
+	<p>abscissa: <code>msg.payload.x</code></p>
+	<p>ordinate: <code>msg.payload.y</code></p>
+	<p>font: <code>msg.payload.font</code></p>
+	<ul>
+		<li><code>oled_3x5</code></li>
+		<li><code>tiny_4x6</code></li>
+		<li><code>oled_5x7</code></li>
+		<li><code>small_6x8</code></li>
+		<li><code>sinclair_8x8</code></li>
+		<li><code>sinclair_inverted_8x8</code></li>
+		<li><code>tiny_8x8</code></li>
+		<li><code>cp437_8x8</code></li>
+		<li><code>myke2_8x9</code></li>
+		<li><code>small_8x12</code></li>
+		<li><code>tron_8x12</code></li>
+		<li><code>retro_8x16</code></li>
+		<li><code>medium_numbers_12x16</code></li>
+		<li><code>big_numbers_14x24</code></li>
+		<li><code>arial_bold_16x16</code></li>
+		<li><code>arial_italic_16x16</code></li>
+		<li><code>arial_normal_16x16</code></li>
+		<li><code>franklin_gothic_normal_16x16</code></li>
+		<li><code>hallfetica_normal_16x16</code></li>
+		<li><code>nadianne_16x16</code></li>
+		<li><code>sinclair_medium_16x16</code></li>
+		<li><code>sinclair_medium_inverted_16x16</code></li>
+		<li><code>swiss_721_outline_16x16</code></li>
+		<li><code>various_symbols_16x16</code></li>
+		<li><code>dot_matrix_medium_16x22</code></li>
+		<li><code>dot_matrix_medium_zero_slash_16x22</code></li>
+		<li><code>dot_matrix_medium_numbers_only_16x22</code></li>
+		<li><code>arial_round_16x24</code></li>
+		<li><code>ocr_a_extended_medium_16x24</code></li>
+		<li><code>grotesk_16x32</code></li>
+		<li><code>grotesk_bold_16x32</code></li>
+		<li><code>retro_16x32</code></li>
+		<li><code>various_symbols_16x32</code></li>
+		<li><code>various_symbols_v2_16x32</code></li>
+		<li><code>dot_matrix_large_numbers_only_24x29</code></li>
+		<li><code>inconsola_24x32</code></li>
+		<li><code>ubuntu_24x32</code></li>
+		<li><code>ubuntu_bold_24x32</code></li>
+		<li><code>dingbats1_extra_large_32x24</code></li>
+		<li><code>various_symbols_32x32</code></li>
+	</ul>
+    <p>string: <code>msg.payload.text</code></p>
+	
+	<p>Example: <code>{"size":2,"x":1,"y":1,"font":"oled_5x7","text":"Oled"}</code></p>
 
+	<p>
+		The <code>font</code> field is optional, defaults to "<code>oled_5x7</code>". 
+		Use <a href="https://www.npmjs.com/package/oled-font-pack"><code>oled-font-pack</code></a> package internally.
+	</p>
+</script>
 /*!
 **********************************************************************************************************************************************************
 */
@@ -460,7 +618,7 @@ return this.name || "Scroll";
 	RED.nodes.registerType('Turn-on', {
 		category: 'oled',
 		color: '#3FADB5',
-        icon: 'OledTurnOn.png',
+		icon: 'OledTurnOn.png',
 		defaults: {
 			name: {
 				value: '',
@@ -472,7 +630,7 @@ return this.name || "Scroll";
 		},
 		inputs: 1,
 		outputs: 0,
-		label: function() {
+		label: function () {
 			return this.name || "Turn On";
 		}
 	})
@@ -503,7 +661,7 @@ return this.name || "Scroll";
 	RED.nodes.registerType('Turn-off', {
 		category: 'oled',
 		color: '#3FADB5',
-        icon: 'OledTurnOff.png',
+		icon: 'OledTurnOff.png',
 		defaults: {
 			name: {
 				value: '',
@@ -515,7 +673,7 @@ return this.name || "Scroll";
 		},
 		inputs: 1,
 		outputs: 0,
-		label: function() {
+		label: function () {
 			return this.name || "Turn Off";
 		}
 	})
@@ -532,6 +690,11 @@ return this.name || "Scroll";
 	</div>
 </script>
 
+<script type="text/x-red" data-help-name="Turn-off">
+    <p>Turns off the Oled display</p>
+    <p><b>Payload</b> should be set to <b>true</b> to enable the node</p>
+	<p>All previous display will be store</p>
+</script>
 /*!
 **********************************************************************************************************************************************************
 */
@@ -539,7 +702,7 @@ return this.name || "Scroll";
 	RED.nodes.registerType('Wifi', {
 		category: 'oled',
 		color: '#3FADB5',
-        icon: 'OledWifi.png',
+		icon: 'OledWifi.png',
 		defaults: {
 			name: {
 				value: '',
@@ -551,7 +714,7 @@ return this.name || "Scroll";
 		},
 		inputs: 1,
 		outputs: 0,
-		label: function() {
+		label: function () {
 			return this.name || "Wifi";
 		}
 	})
@@ -566,4 +729,14 @@ return this.name || "Scroll";
 		<label for='node-config-input-name'><i class='fa fa-tag'></i> <span data-i18n="oled.wifi.name"></label>
 		<input type='text' id='node-input-name'/>
 	</div>
+</script>
+
+<script type="text/x-red" data-help-name="Wifi">
+	<p>Draws a wifi display (w:19, h:9)</p>
+	<p><b>Payload</b> should contain coordinates of the start pixels and the wifi power reception</p>
+	<p>the treasholds are <10,10-40,40-70,70-100</p>
+	<p>abscissa: <b>msg.payload.x</b></p>
+	<p>ordinate: <b>msg.payload.y</b></p>
+ 	<p>percentage: <b>msg.payload.p</b></p>
+	<p>Example: <b>{"x":1,"y":1,"p":25}</b></p>
 </script>

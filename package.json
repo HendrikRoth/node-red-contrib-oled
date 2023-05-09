@@ -1,7 +1,7 @@
 {
   "name": "node-red-contrib-oled",
-  "version": "1.0.5",
-  "description": "Node-Red node for controlling OLED displays",
+  "version": "1.1.0",
+  "description": "Node-Red node for controlling OLED displays with SSD1306 and SH1106 drivers",
   "main": "index.js",
   "scripts": {},
   "keywords": [
@@ -10,7 +10,7 @@
     "ADS1x15 "
   ],
   "engines": {
-    "node": ">=12"
+    "node": ">=12.0.0"
   },
   "author": "Hendrik Roth <hi@hendrikroth.com>",
   "license": "MIT",
@@ -20,10 +20,10 @@
   "homepage": "https://github.com/HendrikRoth/node-red-contrib-oled#readme",
   "dependencies": {
     "i2c-bus": "^5.2.2",
-    "oled-font-5x7": "^1.0.3",
-    "oled-i2c-bus": "^1.0.12",
-    "pngparse": "^2.0.1",
+    "oled-font-pack": "^1.0.1",
+    "oled-rpi-i2c-bus": "^1.1.4",
     "pngjs": "^6.0.0",
+    "pngparse": "^2.0.1",
     "time-events-manager": "^0.1.1"
   },
   "node-red": {
@@ -32,14 +32,15 @@
       "oled": "oled.js"
     }
   },
-  "engines": {
-    "node": ">=12.0.0"
-  },
   "maintainers": [
     {
-    "name": "Antonio Maza",
-    "email": "waterbrain@pelaire.com"
-  }
+      "name": "Antonio Maza",
+      "email": "waterbrain@pelaire.com"
+    },
+    {
+      "name": "Abdul Hadi Fikri",
+      "email": "hadifikri@gmail.com"
+    }
   ],
   "directories": {
     "example": "examples"
